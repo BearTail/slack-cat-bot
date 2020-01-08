@@ -4,8 +4,10 @@
   "description": "タイプスクリプトの勉強会用です。slackでにゃーんと叫ぶと猫の画像が降ってくるようにします。",
   "main": "index.js",
   "dependencies": {
+    "bufferutil": "^4.0.1",
     "serverless": "^1.60.5",
-    "serverless-offline": "^5.12.1"
+    "serverless-offline": "^5.12.1",
+    "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
     "webpack": "^4.41.5",
