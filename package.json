@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "タイプスクリプトの勉強会用です。slackでにゃーんと叫ぶと猫の画像が降ってくるようにします。",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "serverless": "^1.60.5",
+    "serverless-offline": "^5.12.1"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
