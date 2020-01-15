@@ -1,0 +1,30 @@
+service:
+  name: slack-cat-bot
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ap-northeast-1
+  stage: ${opt:stage, 'dev'}
+  origin: ${opt:origin}
+  timeout: 20
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: SlackCatBot
+
+functions:
+  getCatImage:
+    name: get-cat-image
+    handler: src/index.handler
+    events:
+      - http:
+          path: cat_api
+          method: GET
