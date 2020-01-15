@@ -6,27 +6,18 @@ const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search';
 interface VerificationResponseBody {
   statusCode: number;
   headers: any;
-  body: {
-    challenge: string;
-  };
+  body: string;
 }
 
-export function handler(event: APIGatewayEvent): VerificationResponseBody | void {
+export function handler(event: APIGatewayEvent, context, callback): VerificationResponseBody | void {
+  const eventBody = JSON.parse(event.body);
+
   // slack の Event API を利用するために必要な認証
-  if (event.body && event.body.type === 'url_verification') {
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: {
-        challenge: event.body.challenge,
-      },
-    };
+  if (eventBody.type === 'url_verification') {
+    return callback(null, verifySlackEventApi(eventBody.challenge));
   }
 
-  // TODO: どういう形式でくるかを確認する
-  if (!isCatCalled(event.body && event.body.message)) {
+  if (!isCatCalled(eventBody.event.text)) {
     return;
   }
 
@@ -42,6 +33,17 @@ export function handler(event: APIGatewayEvent): VerificationResponseBody | void
       // TODO: エラーハンドリングを追加する
       return;
     });
+}
+
+// @see https://api.slack.com/events/url_verification
+function verifySlackEventApi(challenge: string): VerificationResponseBody {
+  return {
+    statusCode: 200,
+    headers: {
+      'Content-type': 'text/plain',
+    },
+    body: challenge,
+  };
 }
 
 function isCatCalled(message: string | null): boolean {
