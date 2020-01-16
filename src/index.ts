@@ -11,7 +11,6 @@ interface VerificationResponseBody {
 
 export function handler(event: APIGatewayEvent, context, callback): void {
   const eventBody = JSON.parse(event.body);
-  console.log(eventBody);
 
   // slack の Event API を利用するために必要な認証
   if (eventBody.type === 'url_verification') {
@@ -30,6 +29,8 @@ export function handler(event: APIGatewayEvent, context, callback): void {
 
   requestPromise(CAT_API_URL)
     .then(res => {
+      console.log(eventBody);
+
       const response = JSON.parse(res);
       const catUrl = response[0].url;
 
@@ -71,7 +72,7 @@ function isCatCalled(message: string | null): boolean {
 
 function postCatImageToSlack(imageUrl: string): void {
   const requestBody = {
-    text: "にゃーん",
+    text: '',
     attachments: [{
       image_url: imageUrl,
     }],
