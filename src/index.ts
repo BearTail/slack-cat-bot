@@ -1,74 +1,47 @@
-import * as requestPromise from 'request-promise';
-import { APIGatewayEvent } from 'aws-lambda';
+import * as rp from 'request-promise';
+import * as Bluebird from 'bluebird';
+import * as lambda from 'aws-lambda';
 
 const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search';
 
-interface VerificationResponseBody {
+interface ResponseBody {
   statusCode: number;
   headers: any;
   body: string;
 }
 
-export function handler(event: APIGatewayEvent, context, callback): void {
-  const eventBody = JSON.parse(event.body);
+export async function handler(event: lambda.APIGatewayProxyEvent): Promise<ResponseBody> {
+  const eventBody = JSON.parse(event.body || '');
 
-  // slack の Event API を利用するために必要な認証
+  /*
+   * slack の Event API を利用するために必要な認証
+   * @see https://api.slack.com/events/url_verification
+   */
   if (eventBody.type === 'url_verification') {
-    return callback(null, verifySlackEventApi(eventBody.challenge));
+    return formatResponseBody(200, eventBody.challenge);
   }
 
   if (!isCatCalled(eventBody.event.text)) {
-    return callback(null, {
-      statusCode: 200,
-      headers: {
-        'Content-type': 'text/plain',
-      },
-      body: 'Cat is not called',
-    });
+    return formatResponseBody(200, 'Cat is not called');
   }
 
-  requestPromise(CAT_API_URL)
-    .then(res => {
-      const response = JSON.parse(res);
-      const catUrl = response[0].url;
+  try {
+    const res = await rp(CAT_API_URL);
 
-      postCatImageToSlack(catUrl);
+    const response = JSON.parse(res);
+    const catUrl = response[0].url;
 
-      return callback(null, {
-        statusCode: 200,
-        headers: {
-          'Content-type': 'text/plain',
-        },
-        body: 'Cat is posted!',
-      });
-    })
-    .catch(error => {
-      return callback(null, {
-        statusCode: 400,
-        headers: {
-          'Content-type': 'text/plain',
-        },
-        body: 'Failed to post cat!',
-      });
-    });
-}
-
-// @see https://api.slack.com/events/url_verification
-function verifySlackEventApi(challenge: string): VerificationResponseBody {
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-type': 'text/plain',
-    },
-    body: challenge,
-  };
+    return postCatImageToSlack(catUrl);
+  } catch(e) {
+    return formatResponseBody(e.statusCode, e.statusMessage);
+  }
 }
 
 function isCatCalled(message: string | null): boolean {
   return message === 'にゃんこ';
 }
 
-function postCatImageToSlack(imageUrl: string): void {
+async function postCatImageToSlack(imageUrl: string): Promise<ResponseBody> {
   const requestBody = {
     text: '',
     attachments: [{
@@ -80,16 +53,25 @@ function postCatImageToSlack(imageUrl: string): void {
     method: 'POST',
     url: 'https://hooks.slack.com/services/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',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/jsn',
     },
     body: JSON.stringify(requestBody),
   };
 
-  requestPromise(options)
-    .then(res => {
-      console.log('Succeeded to post a cat image to slack!');
-    })
-    .catch(error => {
-      console.log('Failed to post a cat image to slack...');
-    });
+  try {
+    const res = await rp(options);
+    return formatResponseBody(200, res);
+  } catch (e) {
+    return formatResponseBody(e.statusCode, e.statusMessage);
+  }
+}
+
+function formatResponseBody(statusCode: number, message: string): ResponseBody {
+  return {
+    statusCode,
+    headers: {
+      'Content-type': 'text/plain',
+    },
+    body: message,
+  };
 }
