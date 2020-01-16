@@ -29,8 +29,6 @@ export function handler(event: APIGatewayEvent, context, callback): void {
 
   requestPromise(CAT_API_URL)
     .then(res => {
-      console.log(eventBody);
-
       const response = JSON.parse(res);
       const catUrl = response[0].url;
 
