@@ -1,2 +1,8 @@
 # Dependency directories
 node_modules/
+
+# Serverless directories
+.serverless
+
+# Build directories
+.build
