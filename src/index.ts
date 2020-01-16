@@ -9,7 +9,7 @@ interface VerificationResponseBody {
   body: string;
 }
 
-export function handler(event: APIGatewayEvent, context, callback): VerificationResponseBody | void {
+export function handler(event: APIGatewayEvent, context, callback): void {
   const eventBody = JSON.parse(event.body);
   console.log(eventBody);
 
@@ -19,7 +19,13 @@ export function handler(event: APIGatewayEvent, context, callback): Verification
   }
 
   if (!isCatCalled(eventBody.event.text)) {
-    return;
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-type': 'text/plain',
+      },
+      body: 'Cat is not called',
+    });
   }
 
   requestPromise(CAT_API_URL)
@@ -28,11 +34,23 @@ export function handler(event: APIGatewayEvent, context, callback): Verification
       const catUrl = response[0].url;
 
       postCatImageToSlack(catUrl);
-      return;
+
+      return callback(null, {
+        statusCode: 200,
+        headers: {
+          'Content-type': 'text/plain',
+        },
+        body: 'Cat is posted!',
+      });
     })
     .catch(error => {
-      // TODO: エラーハンドリングを追加する
-      return;
+      return callback(null, {
+        statusCode: 400,
+        headers: {
+          'Content-type': 'text/plain',
+        },
+        body: 'Failed to post cat!',
+      });
     });
 }
 
@@ -48,7 +66,7 @@ function verifySlackEventApi(challenge: string): VerificationResponseBody {
 }
 
 function isCatCalled(message: string | null): boolean {
-  return (message ?? '').includes('にゃんこ');
+  return message === 'にゃんこ';
 }
 
 function postCatImageToSlack(imageUrl: string): void {
