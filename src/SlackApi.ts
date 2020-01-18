@@ -7,9 +7,9 @@ const INCOMING_WEBHOOK_URL = 'https://hooks.slack.com/services/T024UHXDW/BSTEH1K
  * @see https://api.slack.com/messaging/webhooks
  * @see https://beartail.slack.com/services/BSMC6AJ9E
  */
-export async function postImageToSlack(imageUrl: string): Promise<SlackResponseBody> {
+export async function postImageToSlack(imageUrl: string, text?: string): Promise<SlackResponseBody> {
   try {
-    const options = requestOptions(imageUrl);
+    const options = postRequestOptions(imageUrl, text);
     const res = await rp(options);
 
     return {
@@ -24,9 +24,9 @@ export async function postImageToSlack(imageUrl: string): Promise<SlackResponseB
   }
 }
 
-function requestOptions(imageUrl: string): rp.OptionsWithUrl {
+function postRequestOptions(imageUrl: string, text?: string): rp.OptionsWithUrl {
   const requestBody = {
-    text: '',
+    text: text ?? '',
     attachments: [{
       image_url: imageUrl,
     }],
