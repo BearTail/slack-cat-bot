@@ -1,7 +1,9 @@
 import * as lambda from 'aws-lambda';
-import { animalSearchableText } from './Animal';
+import { animalSearchableText, animalRequested } from './Animal';
 import { fetchAnimalImageUrl } from './FlickerApi';
 import { postImageToSlack } from './SlackApi';
+import { AnimalEnglish, AnimalKana } from './Types';
+import { getOmikujiResult, omikujiRequested } from './AnimalOmikuji';
 
 export async function searchAndPostAnimalImage(event: lambda.APIGatewayProxyEvent): Promise<lambda.APIGatewayProxyResult> {
   if (!event.body) {
@@ -18,12 +20,40 @@ export async function searchAndPostAnimalImage(event: lambda.APIGatewayProxyEven
     return responseBody(200, eventBody.challenge);
   }
 
-  const animalSearchText = animalSearchableText(eventBody.event.text)
+  const slackText = eventBody.event.text;
 
-  if (!animalSearchText) {
-    return responseBody(200, 'Not going to search image!');
+  if (!slackText) {
+    return responseBody(200, 'Did nothing.');
   }
 
+  if (animalRequested(slackText)) {
+    return await imageToSlack(slackText);
+  }
+
+  if (omikujiRequested(slackText)) {
+    return await tryOmikuji();
+  }
+
+  return responseBody(200, 'Did nothing.');
+}
+
+async function tryOmikuji(): Promise<lambda.APIGatewayProxyResult> {
+  try {
+    const result = await getOmikujiResult();
+
+    if (result) {
+      const res = await postImageToSlack(result.url, result.message);
+      return responseBody(res.statusCode, res.message);
+    } else {
+      return responseBody(404,  'No omikuji result found!');
+    }
+  } catch (e) {
+    return responseBody(e.statusCode, e.statusMessage);
+  }
+}
+
+async function imageToSlack(slackText: string): Promise<lambda.APIGatewayProxyResult> {
+  const animalSearchText = animalSearchableText(slackText);
   const imageUrl = await fetchAnimalImageUrl(animalSearchText);
 
   if (imageUrl === null) {
@@ -33,7 +63,7 @@ export async function searchAndPostAnimalImage(event: lambda.APIGatewayProxyEven
   try {
     const res = await postImageToSlack(imageUrl);
     return responseBody(res.statusCode, res.message);
-  } catch(e) {
+  } catch (e) {
     return responseBody(e.statusCode, e.statusMessage);
   }
 }

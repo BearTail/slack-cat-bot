@@ -1,5 +1,5 @@
 import { hiraganaToKatakana } from 'Util';
-import { AnimalType, AnimalMapsType } from './Types';
+import { AnimalEnglish, AnimalMapsType, AnimalKana } from './Types';
 
 const ANIMAL_MAPPS: AnimalMapsType = {
   'ライオン': 'lion',
@@ -22,10 +22,13 @@ const ANIMAL_MAPPS: AnimalMapsType = {
   'ウサギ': 'rabit',
 };
 
-export function animalSearchableText(text: string | null): AnimalType | null {
-  if (text === null) {
-    return null;
-  }
+// 型の指定方法
+export const ANIMALS_KANA = Object.keys(ANIMAL_MAPPS) as AnimalKana[];
 
+export function animalRequested(text: string): boolean {
+  return Object.keys(ANIMAL_MAPPS).includes(hiraganaToKatakana(text));
+}
+
+export function animalSearchableText(text: string): AnimalEnglish {
   return ANIMAL_MAPPS[hiraganaToKatakana(text)];
 }

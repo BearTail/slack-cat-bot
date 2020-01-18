@@ -21,9 +21,16 @@ export type AnimalMapsType = {
   'ウサギ': 'rabit',
 };
 
-export type AnimalType = ValueOf<AnimalMapsType>;
+export type AnimalEnglish = ValueOf<AnimalMapsType>;
+export type AnimalKana = keyof AnimalMapsType;
 
 export interface SlackResponseBody {
   statusCode: number;
   message: string;
+}
+
+export interface OmikujiResult {
+  message: string;
+  animal: AnimalKana;
+  url: string;
 }

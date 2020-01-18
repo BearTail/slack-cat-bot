@@ -1,5 +1,5 @@
 import * as rp from 'request-promise';
-import { AnimalType } from './Types';
+import { AnimalEnglish } from './Types';
 import { getRandomInt } from 'Util';
 
 const API_KEY = 'aaba8ae7865dc3fdaed68b03528975f9';
@@ -7,7 +7,7 @@ const API_KEY = 'aaba8ae7865dc3fdaed68b03528975f9';
 /*
  * @see https://www.flickr.com/services/api/flickr.photos.search.html
  */
-export async function fetchAnimalImageUrl(animal: AnimalType): Promise<string|null> {
+export async function fetchAnimalImageUrl(animal: AnimalEnglish): Promise<string|null> {
   try {
     const requestUrl = photosSearchUrl(animal);
     const res = await rp(requestUrl);
@@ -23,7 +23,7 @@ export async function fetchAnimalImageUrl(animal: AnimalType): Promise<string|nu
   }
 }
 
-function photosSearchUrl(animal: AnimalType): string {
+function photosSearchUrl(animal: AnimalEnglish): string {
   const method = 'flickr.photos.search';
   const perPage = 100;
   const maxPage = 100;
