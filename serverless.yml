@@ -1,5 +1,5 @@
 service:
-  name: slack-cat-bot
+  name: slack-animal-bot
 
 plugins:
   - serverless-offline
@@ -7,10 +7,9 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
   region: ap-northeast-1
   stage: ${opt:stage, 'dev'}
-  origin: ${opt:origin}
   timeout: 20
 
 resources:
@@ -18,13 +17,13 @@ resources:
     ApiGatewayRestApi:
       Type: AWS::ApiGateway::RestApi
       Properties:
-        Name: SlackCatBot
+        Name: SlackAnimalBot
 
 functions:
-  getCatImage:
-    name: get-cat-image
-    handler: src/index.handler
+  searchAndPostAnimalImage:
+    name: search-and-post-animal-image
+    handler: src/index.searchAndPostAnimalImage
     events:
       - http:
-          path: cat_api
+          path: animal_api
           method: POST

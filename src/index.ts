@@ -1,72 +1,44 @@
-import * as rp from 'request-promise';
-import * as Bluebird from 'bluebird';
 import * as lambda from 'aws-lambda';
+import { animalSearchableText } from './Animal';
+import { fetchAnimalImageUrl } from './FlickerApi';
+import { postImageToSlack } from './SlackApi';
 
-const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search';
+export async function searchAndPostAnimalImage(event: lambda.APIGatewayProxyEvent): Promise<lambda.APIGatewayProxyResult> {
+  if (!event.body) {
+    return responseBody(200, 'No event body found!');
+  }
 
-interface ResponseBody {
-  statusCode: number;
-  headers: any;
-  body: string;
-}
-
-export async function handler(event: lambda.APIGatewayProxyEvent): Promise<ResponseBody> {
-  const eventBody = JSON.parse(event.body || '');
+  const eventBody = JSON.parse(event.body);
 
   /*
-   * slack の Event API を利用するために必要な認証
+   * slack の Event API を利用するために初回のみ必要となる認証
    * @see https://api.slack.com/events/url_verification
    */
   if (eventBody.type === 'url_verification') {
-    return formatResponseBody(200, eventBody.challenge);
+    return responseBody(200, eventBody.challenge);
   }
 
-  if (!isCatCalled(eventBody.event.text)) {
-    return formatResponseBody(200, 'Cat is not called');
+  const animalSearchText = animalSearchableText(eventBody.event.text)
+
+  if (!animalSearchText) {
+    return responseBody(200, 'Not going to search image!');
+  }
+
+  const imageUrl = await fetchAnimalImageUrl(animalSearchText);
+
+  if (imageUrl === null) {
+    return responseBody(404, 'Image not found!');
   }
 
   try {
-    const res = await rp(CAT_API_URL);
-
-    const response = JSON.parse(res);
-    const catUrl = response[0].url;
-
-    return postCatImageToSlack(catUrl);
+    const res = await postImageToSlack(imageUrl);
+    return responseBody(res.statusCode, res.message);
   } catch(e) {
-    return formatResponseBody(e.statusCode, e.statusMessage);
+    return responseBody(e.statusCode, e.statusMessage);
   }
 }
 
-function isCatCalled(message: string | null): boolean {
-  return message === 'にゃんこ';
-}
-
-async function postCatImageToSlack(imageUrl: string): Promise<ResponseBody> {
-  const requestBody = {
-    text: '',
-    attachments: [{
-      image_url: imageUrl,
-    }],
-  };
-
-  const options = {
-    method: 'POST',
-    url: 'https://hooks.slack.com/services/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',
-    headers: {
-      'Content-Type': 'application/jsn',
-    },
-    body: JSON.stringify(requestBody),
-  };
-
-  try {
-    const res = await rp(options);
-    return formatResponseBody(200, res);
-  } catch (e) {
-    return formatResponseBody(e.statusCode, e.statusMessage);
-  }
-}
-
-function formatResponseBody(statusCode: number, message: string): ResponseBody {
+function responseBody(statusCode: number, message: string): lambda.APIGatewayProxyResult {
   return {
     statusCode,
     headers: {
