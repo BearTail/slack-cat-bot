@@ -4,10 +4,10 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "allowJs": true,
-    "target": "es2019",
+    "target": "es5",
     "outDir": ".build",
     "moduleResolution": "node",
-    "lib": ["es2019"],
+    "lib": ["es2015"],
     "rootDir": "./"
   }
 }
