@@ -2,7 +2,6 @@ import * as lambda from 'aws-lambda';
 import { animalSearchableText, animalRequested } from './Animal';
 import { fetchAnimalImageUrl } from './FlickerApi';
 import { postImageToSlack } from './SlackApi';
-import { AnimalEnglish, AnimalKana } from './Types';
 import { getOmikujiResult, omikujiRequested } from './AnimalOmikuji';
 
 export async function searchAndPostAnimalImage(event: lambda.APIGatewayProxyEvent): Promise<lambda.APIGatewayProxyResult> {
@@ -42,13 +41,14 @@ async function tryOmikuji(): Promise<lambda.APIGatewayProxyResult> {
     const result = await getOmikujiResult();
 
     if (result) {
+      // タイムアウトの制約から複数回リクエストが送られてしまう問題がある
       const res = await postImageToSlack(result.url, result.message);
       return responseBody(res.statusCode, res.message);
     } else {
       return responseBody(404,  'No omikuji result found!');
     }
   } catch (e) {
-    return responseBody(e.statusCode, e.statusMessage);
+    return responseBody(500, 'Unexpected error occurred in slack api.');
   }
 }
 
@@ -61,10 +61,11 @@ async function imageToSlack(slackText: string): Promise<lambda.APIGatewayProxyRe
   }
 
   try {
+    // タイムアウトの制約から複数回リクエストが送られてしまう問題がある
     const res = await postImageToSlack(imageUrl);
     return responseBody(res.statusCode, res.message);
   } catch (e) {
-    return responseBody(e.statusCode, e.statusMessage);
+    return responseBody(500, 'Unexpected error occurred in slack api.');
   }
 }
 

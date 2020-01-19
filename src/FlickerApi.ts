@@ -1,6 +1,6 @@
 import * as rp from 'request-promise';
 import { AnimalEnglish } from './Types';
-import { getRandomInt } from 'Util';
+import { getRandomInt } from './Util';
 
 const API_KEY = 'aaba8ae7865dc3fdaed68b03528975f9';
 
@@ -19,6 +19,7 @@ export async function fetchAnimalImageUrl(animal: AnimalEnglish): Promise<string
 
     return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
   } catch (e) {
+    console.log(`Error occurred in flicker api: ${e}`);
     return null;
   }
 }

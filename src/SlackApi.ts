@@ -1,7 +1,7 @@
 import * as rp from 'request-promise';
 import { SlackResponseBody } from './Types';
 
-const INCOMING_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
+const INCOMING_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
 
 /*
  * @see https://api.slack.com/messaging/webhooks
@@ -17,6 +17,8 @@ export async function postImageToSlack(imageUrl: string, text?: string): Promise
       message: res,
     };
   } catch (e) {
+    console.log(`Error occurred in slack api: ${e}`);
+
     return {
       statusCode: e.statusCode,
       message: e.statusMessage,
@@ -26,7 +28,7 @@ export async function postImageToSlack(imageUrl: string, text?: string): Promise
 
 function postRequestOptions(imageUrl: string, text?: string): rp.OptionsWithUrl {
   const requestBody = {
-    text: text ?? '',
+    text: text ? text : '',
     attachments: [{
       image_url: imageUrl,
     }],
