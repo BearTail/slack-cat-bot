@@ -12,7 +12,7 @@ const ANIMAL_MAPPS: AnimalMapsType = {
   'マヌルニャンコ': 'manul cat',
   'カワウソ': 'otter',
   'ニャンコ': 'cat',
-  'パンダ': 'panda',
+  'パンダ': 'giant panda china -red', // レッサーパンダが検索で引っかからないように
   'ペンギン': 'penguin',
   'チーター': 'cheetah',
   'キツネ': 'fox',
