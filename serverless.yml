@@ -20,10 +20,16 @@ resources:
         Name: SlackAnimalBot
 
 functions:
-  searchAndPostAnimalImage:
-    name: search-and-post-animal-image
-    handler: src/index.searchAndPostAnimalImage
+  responseToSlackMessage:
+    name: response-to-slack-message-${self:provider.stage}
+    handler: src/index.handler
     events:
       - http:
           path: animal_api
           method: POST
+  drawAnimalOmikuji:
+    name: draw-animal-omikuji-${self:provider.stage}
+    handler: src/Actions.drawAnimalOmikuji
+  randomAnimal:
+    name: random-animal-${self:provider.stage}
+    handler: src/Actions.randomAnimal
