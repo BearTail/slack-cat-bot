@@ -1,7 +1,7 @@
 import * as rp from 'request-promise';
 import { SlackResponseBody } from './Types';
 
-const INCOMING_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
+const INCOMING_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
 
 /*
  * @see https://api.slack.com/messaging/webhooks
