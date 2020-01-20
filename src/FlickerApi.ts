@@ -2,6 +2,7 @@ import * as rp from 'request-promise';
 import { AnimalEnglish } from './Types';
 import { getRandomInt } from './Util';
 
+// @todo 環境変数を読み込むようにする
 const API_KEY = 'aaba8ae7865dc3fdaed68b03528975f9';
 
 /*

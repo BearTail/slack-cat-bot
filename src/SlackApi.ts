@@ -1,6 +1,7 @@
 import * as rp from 'request-promise';
 import { SlackResponseBody } from './Types';
 
+// @todo 環境変数を読み込むようにする
 const INCOMING_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
 
 /*
