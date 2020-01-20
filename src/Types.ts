@@ -21,6 +21,8 @@ export type AnimalMapsType = {
 export type AnimalEnglish = ValueOf<AnimalMapsType>;
 export type AnimalKana = keyof AnimalMapsType;
 
+export type Fortune = '大吉' | '吉' | '中吉' | '小吉' | '末吉' | '凶' | '大凶';
+
 export interface SlackResponseBody {
   statusCode: number;
   message: string;

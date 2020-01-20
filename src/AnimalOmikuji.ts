@@ -1,6 +1,6 @@
 import { randomSelect } from './Util';
 import { ANIMALS_KANA, animalSearchableText } from './Animal';
-import { OmikujiResult, AnimalKana } from './Types';
+import { OmikujiResult, AnimalKana, Fortune } from './Types';
 import { fetchAnimalImageUrl } from './FlickerApi';
 
 export function omikujiRequested(text: string): boolean {
@@ -27,8 +27,8 @@ function selectAnimal(): AnimalKana {
   return randomSelect(ANIMALS_KANA);
 }
 
-function selectFortune(): string {
-  const fortunes = [
+function selectFortune(): Fortune {
+  const fortunes: Fortune[] = [
     '大吉',
     '吉',
     '中吉',
