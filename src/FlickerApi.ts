@@ -1,4 +1,5 @@
 import * as rp from 'request-promise';
+
 import { AnimalEnglish } from './Types';
 import { getRandomInt } from './Util';
 
@@ -6,6 +7,8 @@ import { getRandomInt } from './Util';
 const API_KEY = 'aaba8ae7865dc3fdaed68b03528975f9';
 
 /*
+ * 動物の画像を検索します
+ * 検索結果が見つからなかった場合には null を、見つかった場合には画像URLを返します
  * @see https://www.flickr.com/services/api/flickr.photos.search.html
  */
 export async function fetchAnimalImageUrl(animal: AnimalEnglish): Promise<string|null> {

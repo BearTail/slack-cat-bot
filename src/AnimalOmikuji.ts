@@ -3,11 +3,7 @@ import { ANIMALS_KANA, animalSearchableText } from './Animal';
 import { OmikujiResult, AnimalKana, Fortune } from './Types';
 import { fetchAnimalImageUrl } from './FlickerApi';
 
-export function omikujiRequested(text: string): boolean {
-  return text === 'おみくじ';
-}
-
-export async function getOmikujiResult(): Promise<OmikujiResult | null> {
+export async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
   const animal = selectAnimal();
   const animalSearchText = animalSearchableText(animal);
   const animalImageUrl = await fetchAnimalImageUrl(animalSearchText);
