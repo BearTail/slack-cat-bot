@@ -25,7 +25,7 @@ export async function randomAnimal(animal: AnimalEnglish): Promise<void> {
   const imageUrl = await fetchAnimalImageUrl(animal);
 
   if (imageUrl === null) {
-    console.log('no image found!');
+    console.log('no images found!');
     return;
   }
 
