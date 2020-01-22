@@ -31,7 +31,6 @@ export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambd
     if (animal) {
       await randomAnimal(animal);
 
-      console.log('Lambda function "randomAnimal" invoked!');
       return responseBody(200, 'Lambda function "randomAnimal" invoked!');
     }
   }
@@ -39,7 +38,6 @@ export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambd
   if (slackText === 'おみくじ') {
     await drawAnimalOmikuji();
 
-    console.log('Lambda function "drawAnimalOmikuji" invoked!');
     return responseBody(200, 'Lambda function "drawAnimalOmikuji" invoked!');
   }
 
