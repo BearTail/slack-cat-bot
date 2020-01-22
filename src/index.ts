@@ -31,12 +31,16 @@ export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambd
     const animal = animalSearchableText(slackText) as AnimalEnglish | null;
     if (animal) {
       randomAnimal(animal);
+
+      console.log('Lambda function "randomAnimal" invoked!');
       return responseBody(200, 'Lambda function "randomAnimal" invoked!');
     }
   }
 
   if (slackText === 'おみくじ') {
     drawAnimalOmikuji();
+
+    console.log('Lambda function "drawAnimalOmikuji" invoked!');
     return responseBody(200, 'Lambda function "drawAnimalOmikuji" invoked!');
   }
 
@@ -52,7 +56,7 @@ function randomAnimal(animal: AnimalEnglish): void {
     }),
   };
 
-  awsLambda.invoke(params, () => {});
+  awsLambda.invoke(params);
 }
 
 function drawAnimalOmikuji(): void {
@@ -61,7 +65,7 @@ function drawAnimalOmikuji(): void {
     InvocationType: 'RequestResponse',
   };
 
-  awsLambda.invoke(params, () => {});
+  awsLambda.invoke(params);
 }
 
 function responseBody(statusCode: number, message: string): lambda.APIGatewayProxyResult {
