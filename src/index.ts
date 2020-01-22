@@ -1,10 +1,9 @@
 import * as lambda from 'aws-lambda';
-import * as aws from 'aws-sdk';
 
 import { animalSearchableText, animalRequested } from './Animal';
 import { AnimalEnglish } from './Types';
 
-const awsLambda = new aws.Lambda();
+import { drawAnimalOmikuji, randomAnimal } from './Actions';
 
 export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambda.APIGatewayProxyResult> {
   if (!event.body) {
@@ -30,7 +29,7 @@ export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambd
   if (animalRequested(slackText)) {
     const animal = animalSearchableText(slackText) as AnimalEnglish | null;
     if (animal) {
-      randomAnimal(animal);
+      await randomAnimal(animal);
 
       console.log('Lambda function "randomAnimal" invoked!');
       return responseBody(200, 'Lambda function "randomAnimal" invoked!');
@@ -38,34 +37,13 @@ export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambd
   }
 
   if (slackText === 'おみくじ') {
-    drawAnimalOmikuji();
+    await drawAnimalOmikuji();
 
     console.log('Lambda function "drawAnimalOmikuji" invoked!');
     return responseBody(200, 'Lambda function "drawAnimalOmikuji" invoked!');
   }
 
   return responseBody(200, 'Did nothing.');
-}
-
-function randomAnimal(animal: AnimalEnglish): void {
-  const params = {
-    FunctionName: 'randomAnimal',
-    InvocationType: 'RequestResponse',
-    Payload: JSON.stringify({
-      animalEnglish: animal,
-    }),
-  };
-
-  awsLambda.invoke(params);
-}
-
-function drawAnimalOmikuji(): void {
-  const params = {
-    FunctionName: 'drawAnimalOmikuji',
-    InvocationType: 'RequestResponse',
-  };
-
-  awsLambda.invoke(params);
 }
 
 function responseBody(statusCode: number, message: string): lambda.APIGatewayProxyResult {

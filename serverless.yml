@@ -11,25 +11,6 @@ provider:
   region: ap-northeast-1
   stage: ${opt:stage, 'dev'}
   timeout: 20
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - "lambda:InvokeFunction"
-      Resource:
-        Fn::Join:
-          - ""
-          - - "arn:aws:lambda:"
-            - "ap-northeast-1:956903118628:"
-            - "drawAnimalOmikuji"
-    - Effect: Allow
-      Action:
-        - "lambda:InvokeFunction"
-      Resource:
-        Fn::Join:
-          - ""
-          - - "arn:aws:lambda:"
-            - "ap-northeast-1:956903118628:"
-            - "randomAnimal"
 
 resources:
   Resources:
@@ -46,9 +27,3 @@ functions:
       - http:
           path: animal_api
           method: POST
-  drawAnimalOmikuji:
-    name: draw-animal-omikuji-${self:provider.stage}
-    handler: src/Actions.drawAnimalOmikuji
-  randomAnimal:
-    name: random-animal-${self:provider.stage}
-    handler: src/Actions.randomAnimal
