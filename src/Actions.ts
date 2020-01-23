@@ -1,5 +1,3 @@
-import * as lambda from 'aws-lambda';
-
 import { getAnimalOmikujiResult } from './AnimalOmikuji';
 import { fetchAnimalImageUrl } from './FlickerApi';
 import { postImageToSlack } from './SlackApi';
@@ -23,22 +21,11 @@ export async function drawAnimalOmikuji(): Promise<void> {
 /*
  * 動物の写真をランダムで選択し、slackに画像を投稿します
  */
-export async function randomAnimal(event: lambda.APIGatewayProxyEvent): Promise<void> {
-  if (!event.body) {
-    return;
-  }
-
-  const eventBody = JSON.parse(event.body);
-  const animal: AnimalEnglish = eventBody.animalEnglish;
-
-  if (!animal) {
-    return;
-  }
-
+export async function randomAnimal(animal: AnimalEnglish): Promise<void> {
   const imageUrl = await fetchAnimalImageUrl(animal);
 
   if (imageUrl === null) {
-    console.log('no image found!');
+    console.log('no images found!');
     return;
   }
 

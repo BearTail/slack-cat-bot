@@ -3,9 +3,6 @@ import * as rp from 'request-promise';
 import { AnimalEnglish } from './Types';
 import { getRandomInt } from './Util';
 
-// @todo 環境変数を読み込むようにする
-const API_KEY = 'aaba8ae7865dc3fdaed68b03528975f9';
-
 /*
  * 動物の画像を検索します
  * 検索結果が見つからなかった場合には null を、見つかった場合には画像URLを返します
@@ -34,5 +31,5 @@ function photosSearchUrl(animal: AnimalEnglish): string {
   const maxPage = 100;
   const page = getRandomInt(maxPage);
 
-  return `https://api.flickr.com/services/rest?api_key=${API_KEY}&method=${method}&text=${animal}&per_page=${perPage}&page=${page}&sort=relevance&format=json&nojsoncallback=1&lang=en-US`;
+  return `https://api.flickr.com/services/rest?api_key=${process.env.FLICKER_API_KEY}&method=${method}&text=${animal}&per_page=${perPage}&page=${page}&sort=relevance&format=json&nojsoncallback=1&lang=en-US`;
 }
