@@ -1,7 +1,28 @@
 import { getAnimalOmikujiResult } from './AnimalOmikuji';
+import { selectRandomCat, catSearchableText } from './Cat';
 import { fetchAnimalImageUrl } from './FlickerApi';
 import { postImageToSlack } from './SlackApi';
 import { AnimalEnglish } from './Types';
+
+/*
+ * ランダムにニャンコを抽出します
+ */
+export async function randomCat(): Promise<void> {
+  const cat = selectRandomCat();
+  const searchableText = catSearchableText(cat)
+  const imageUrl = await fetchAnimalImageUrl(searchableText);
+
+  if (imageUrl === null) {
+    console.log('no images found!');
+    return;
+  }
+
+  try {
+    await postImageToSlack(imageUrl, cat);
+  } catch (e) {
+    console.log(`error occurred: ${e}`);
+  }
+}
 
 /*
  * 動物おみくじを引いて、slackに結果を投稿します

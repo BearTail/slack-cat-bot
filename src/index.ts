@@ -1,9 +1,10 @@
 import * as lambda from 'aws-lambda';
 
 import { animalSearchableText, animalRequested } from './Animal';
+import { randomCatRequested } from './Cat';
 import { AnimalEnglish } from './Types';
 
-import { drawAnimalOmikuji, randomAnimal } from './Actions';
+import { drawAnimalOmikuji, randomAnimal, randomCat } from './Actions';
 
 export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambda.APIGatewayProxyResult> {
   if (!event.body) {
@@ -26,19 +27,25 @@ export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambd
     return responseBody(200, 'Did nothing.');
   }
 
+  if (randomCatRequested(slackText)) {
+    await randomCat();
+
+    return responseBody(200, 'Random cat posted!');
+  }
+
   if (animalRequested(slackText)) {
     const animal = animalSearchableText(slackText) as AnimalEnglish | null;
     if (animal) {
       await randomAnimal(animal);
 
-      return responseBody(200, 'Lambda function "randomAnimal" invoked!');
+      return responseBody(200, 'Random animal posted!');
     }
   }
 
   if (slackText === 'おみくじ') {
     await drawAnimalOmikuji();
 
-    return responseBody(200, 'Lambda function "drawAnimalOmikuji" invoked!');
+    return responseBody(200, 'Omikuji posted');
   }
 
   return responseBody(200, 'Did nothing.');
