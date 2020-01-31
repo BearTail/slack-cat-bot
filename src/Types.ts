@@ -11,6 +11,7 @@ export type AnimalMapsType = {
   'マヌルニャンコ': 'manul cat',
   'カワウソ': 'otter',
   'ニャンコ': 'cat',
+  'ネテルニャンコ': 'sleeping cat',
   'コネコ': 'cute kitten',
   'パンダ': 'giant panda china -red', // レッサーパンダが検索で引っかからないように
   'ペンギン': 'penguin',
