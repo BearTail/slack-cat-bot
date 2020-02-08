@@ -3,7 +3,7 @@ import { postImage } from '../slack/api';
 import { GEMBA_CATS } from '../collections/gemba-cat';
 
 export async function gembaCat(text: string): Promise<void> {
-  if (text !== '現場にゃんこ') {
+  if (text !== '現場にゃんこ' && text !== '現場猫') {
     return;
   }
 
