@@ -14,10 +14,12 @@ export async function handleSlackMessage(
 
   const eventBody = JSON.parse(event.body);
 
+  // Event Api の初回のみの認証
   if (isVerifyingEventApi(eventBody)) {
     return apiGatewayProxyResult(200, eventBody.challenge);
   }
 
+  // 3秒以内にレスポンスを返さないとタイムアウトと見なされ再度リクエストが来るためSQSを使う
   const result = await sendMessage(event.body, context, `AnimalSlackBotResponseQueue`);
 
   if (result) {
