@@ -18,7 +18,10 @@ export async function fetchAnimalImageUrl(animal: AnimalEnglish | CatEnglish): P
     const randomIndex = getRandomInt(photos.length);
     const photo = photos[randomIndex];
 
-    return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
+    const url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`
+    console.log(url);
+
+    return url;
   } catch (e) {
     console.log(`Error occurred in flicker api: ${e}`);
     return null;
