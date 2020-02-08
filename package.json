@@ -4,6 +4,7 @@
   "description": "タイプスクリプトの勉強会用です。slackでにゃーんと叫ぶと猫の画像が降ってくるようにします。",
   "main": "index.js",
   "dependencies": {
+    "@aws-sdk/client-sqs-node": "^0.1.0-preview.2",
     "@types/aws-lambda": "^8.10.39",
     "@types/request-promise": "^4.1.45",
     "aws-lambda": "^1.0.5",
