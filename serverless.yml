@@ -29,6 +29,7 @@ provider:
       Resource: "*"
   environment:
     REGION: ${self:custom.region}
+    GEMBA_CAT_SKACK_INCOMING_WEBHOOK_URL: ${ssm:/slack.incoming_webhooks.gemba_cat~true}
     SKACK_INCOMING_WEBHOOK_URL: ${ssm:/slack.incoming_webhooks.cat~true}
     FLICKER_API_KEY: ${ssm:/flicker.apikey~true}
 
