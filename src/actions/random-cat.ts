@@ -1,4 +1,8 @@
-import { selectRandomCat, catSearchableText, randomCatRequested } from '../Cat';
+import {
+  selectRandomCat,
+  catSearchableText,
+  randomCatRequested
+} from '../Cat';
 
 import { fetchAnimalImageUrl } from '../flicker/api';
 import { postImage } from '../slack/api';

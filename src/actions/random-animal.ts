@@ -1,8 +1,8 @@
+import { AnimalEnglish } from '../Types';
+import { animalSearchableText, animalRequested } from '../Animal';
+
 import { fetchAnimalImageUrl } from '../flicker/api';
 import { postImage } from '../slack/api';
-import { AnimalEnglish } from '../Types';
-
-import { animalSearchableText, animalRequested } from '../Animal';
 
 /*
  * 動物の写真をランダムで選択し、slackに画像を投稿します
