@@ -1,10 +1,8 @@
 import * as lambda from 'aws-lambda';
 
-import { animalSearchableText, animalRequested } from '../Animal';
-import { randomCatRequested } from '../Cat';
-import { AnimalEnglish } from '../Types';
-
-import { drawAnimalOmikuji, randomAnimal, randomCat } from '../actions';
+import { randomCat } from '../actions/random-cat';
+import { randomAnimal } from '../actions/random-animal';
+import { drawAnimalOmikuji } from '../actions/animal-omikuji';
 
 export async function handler(event: lambda.SQSEvent): Promise<void> {
   event.Records.forEach(record => {
@@ -16,21 +14,7 @@ export async function handler(event: lambda.SQSEvent): Promise<void> {
 async function dealWithEventBody(body: any): Promise<void> {
   const slackText: string = body.event.text || '';
 
-  if (randomCatRequested(slackText)) {
-    await randomCat();
-    return;
-  }
-
-  if (animalRequested(slackText)) {
-    const animal = animalSearchableText(slackText) as AnimalEnglish | null;
-    if (animal) {
-      await randomAnimal(animal);
-      return;
-    }
-  }
-
-  if (slackText === 'おみくじ') {
-    await drawAnimalOmikuji();
-    return;
-  }
+  await randomCat(slackText);
+  await randomAnimal(slackText);
+  await drawAnimalOmikuji(slackText);
 }
