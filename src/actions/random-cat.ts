@@ -1,7 +1,8 @@
+import { hiraganaToKatakana } from '../utils/utils';
+
 import {
   selectRandomCat,
   catSearchableText,
-  randomCatRequested
 } from '../Cat';
 
 import { fetchAnimalImageUrl } from '../flicker/api';
@@ -29,4 +30,14 @@ export async function randomCat(text: string): Promise<void> {
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }
+}
+
+function randomCatRequested(text: string): boolean {
+  return [
+    'ナンデモイイカラニャンコクレ',
+    'ニャンコクレ',
+    'ランダムニャンコ',
+    'ニャンコホシイ',
+    'ニャンコタリナイ',
+  ].includes(hiraganaToKatakana(text));
 }

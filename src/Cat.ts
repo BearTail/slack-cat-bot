@@ -1,4 +1,4 @@
-import { hiraganaToKatakana, randomSelect } from './Util';
+import { hiraganaToKatakana, randomSelect } from './utils/utils';
 import { CatEnglish, CatMapsType, CatKana } from './Types';
 
 const CAT_MAPPS: CatMapsType = {
@@ -23,16 +23,6 @@ export function selectRandomCat(): CatKana {
 
 // 型の指定方法
 export const CAT_KANA = Object.keys(CAT_MAPPS) as CatKana[];
-
-export function randomCatRequested(text: string): boolean {
-  return [
-    'ナンデモイイカラニャンコクレ',
-    'ニャンコクレ',
-    'ランダムニャンコ',
-    'ニャンコホシイ',
-    'ニャンコタリナイ',
-  ].includes(hiraganaToKatakana(text));
-}
 
 export function catSearchableText(text: string): CatEnglish {
   return CAT_MAPPS[hiraganaToKatakana(text)];
