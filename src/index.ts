@@ -21,8 +21,8 @@ export async function handleSlackMessage(
   const result = await sendMessage(event.body, context, `AnimalSlackBotResponseQueue`);
 
   if (result) {
-    return apiGatewayProxyResult(200, 'Process finished.');
+    return apiGatewayProxyResult(200, 'Process finished!');
   } else {
-    return apiGatewayProxyResult(500, 'Process falied.');
+    return apiGatewayProxyResult(500, 'Process falied!');
   }
 }

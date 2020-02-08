@@ -1,8 +1,8 @@
-import { getAnimalOmikujiResult } from './AnimalOmikuji';
-import { selectRandomCat, catSearchableText } from './Cat';
-import { fetchAnimalImageUrl } from './FlickerApi';
-import { postImageToSlack } from './SlackApi';
-import { AnimalEnglish } from './Types';
+import { getAnimalOmikujiResult } from '../AnimalOmikuji';
+import { selectRandomCat, catSearchableText } from '../Cat';
+import { fetchAnimalImageUrl } from '../flicker/api';
+import { postImage } from '../slack/api';
+import { AnimalEnglish } from '../Types';
 
 /*
  * ランダムにニャンコを抽出します
@@ -18,7 +18,7 @@ export async function randomCat(): Promise<void> {
   }
 
   try {
-    await postImageToSlack(imageUrl, cat);
+    await postImage(imageUrl, cat);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }
@@ -32,7 +32,7 @@ export async function drawAnimalOmikuji(): Promise<void> {
     const result = await getAnimalOmikujiResult();
 
     if (result) {
-      await postImageToSlack(result.url, result.message);
+      await postImage(result.url, result.message);
     }
   } catch (e) {
     console.log(`error occurred: ${e}`);
@@ -51,7 +51,7 @@ export async function randomAnimal(animal: AnimalEnglish): Promise<void> {
   }
 
   try {
-    await postImageToSlack(imageUrl);
+    await postImage(imageUrl);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }

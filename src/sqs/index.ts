@@ -4,15 +4,17 @@ import { animalSearchableText, animalRequested } from '../Animal';
 import { randomCatRequested } from '../Cat';
 import { AnimalEnglish } from '../Types';
 
-import { drawAnimalOmikuji, randomAnimal, randomCat } from '../Actions';
+import { drawAnimalOmikuji, randomAnimal, randomCat } from '../actions';
 
-export async function handler(event: lambda.SQSEvent): Promise<undefined> {
-  const body = JSON.parse(event.Records[0].body);
-  const slackText: string | null = body.event.text;
+export async function handler(event: lambda.SQSEvent): Promise<void> {
+  event.Records.forEach(record => {
+    const body = JSON.parse(record.body);
+    dealWithEventBody(body);
+  });
+}
 
-  if (!slackText) {
-    return;
-  }
+async function dealWithEventBody(body: any): Promise<void> {
+  const slackText: string = body.event.text || '';
 
   if (randomCatRequested(slackText)) {
     await randomCat();
