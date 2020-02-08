@@ -1,16 +1,10 @@
 import * as lambda from 'aws-lambda';
-import { sendMessage } from './sqs/client';
 
+import { sendMessage } from './sqs/client';
 import { isVerifyingEventApi } from './slack/types';
 import { apiGatewayProxyResult } from './slack/api';
 
-import { animalSearchableText, animalRequested } from './Animal';
-import { randomCatRequested } from './Cat';
-import { AnimalEnglish } from './Types';
-
-import { drawAnimalOmikuji, randomAnimal, randomCat } from './Actions';
-
-export async function catchSlackMessage(
+export async function handleSlackMessage(
   event: lambda.APIGatewayProxyEvent,
   context: lambda.Context,
 ): Promise<lambda.APIGatewayProxyResult> {
@@ -31,36 +25,4 @@ export async function catchSlackMessage(
   } else {
     return apiGatewayProxyResult(500, 'Process falied.');
   }
-}
-
-export async function handler(event: lambda.SQSEvent): Promise<lambda.APIGatewayProxyResult> {
-  const body = JSON.parse(event.Records[0].body);
-  const slackText: string | null = body.event.text;
-
-  if (!slackText) {
-    return apiGatewayProxyResult(200, 'Did nothing.');
-  }
-
-  if (randomCatRequested(slackText)) {
-    await randomCat();
-
-    return apiGatewayProxyResult(200, 'Random cat posted!');
-  }
-
-  if (animalRequested(slackText)) {
-    const animal = animalSearchableText(slackText) as AnimalEnglish | null;
-    if (animal) {
-      await randomAnimal(animal);
-
-      return apiGatewayProxyResult(200, 'Random animal posted!');
-    }
-  }
-
-  if (slackText === 'おみくじ') {
-    await drawAnimalOmikuji();
-
-    return apiGatewayProxyResult(200, 'Omikuji posted');
-  }
-
-  return apiGatewayProxyResult(200, 'Did nothing.');
 }

@@ -44,9 +44,9 @@ resources:
         QueueName: AnimalSlackBotResponseQueue
 
 functions:
-  catchSlackMessage:
-    name: catch-slack-response-${self:provider.stage}
-    handler: src/index.catchSlackMessage
+  handleSlackMessage:
+    name: handle-slack-response-${self:provider.stage}
+    handler: src/index.handleSlackMessage
     events:
       - http:
           path: animal_api
