@@ -26,11 +26,6 @@ export type AnimalKana = keyof AnimalMapsType;
 export type Fortune = '大吉' | '吉' | '中吉' | '小吉' | '末吉' | '凶（あと少し待てば大吉）';
 export type CatBreed = 'アメリカンショートヘア' | 'マンチカン' | '三毛猫' | 'スコティッシュホールド' | 'ノルウェージャンフォレスト' | 'ロシアンブルー' | 'ブリティッシュショートヘア' | 'ラグドール' | 'くろねこ' | 'ベンガルにゃんこ' | 'メインクーン' | 'サイベリアン';
 
-export interface SlackResponseBody {
-  statusCode: number;
-  message: string;
-}
-
 export interface OmikujiResult {
   message: string;
   animal: AnimalKana;
