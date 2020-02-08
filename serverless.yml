@@ -5,22 +5,30 @@ plugins:
   - serverless-offline
   - serverless-plugin-typescript
 
+custom:
+  region: ap-northeast-1
+
 provider:
   name: aws
   runtime: nodejs12.x
-  region: ap-northeast-1
+  region: ${self:custom.region}
   stage: ${opt:stage, 'dev'}
   timeout: 20
   iamRoleStatements:
-    - Effect: "Allow"
+    - Effect: Allow
       Action:
-        - "ssm:GetParameter"
+        - ssm:GetParameter
       Resource: "*"
     - Effect: "Allow"
       Action:
-        - "kms:Decrypt"
+        - sqs:sendMessage
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - kms:Decrypt
       Resource: "*"
   environment:
+    REGION: ${self:custom.region}
     SKACK_INCOMING_WEBHOOK_URL: ${ssm:/slack.incoming_webhooks.cat~true}
     FLICKER_API_KEY: ${ssm:/flicker.apikey~true}
 
@@ -30,12 +38,25 @@ resources:
       Type: AWS::ApiGateway::RestApi
       Properties:
         Name: SlackAnimalBot
+    AnimalSlackBotResponseQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: AnimalSlackBotResponseQueue
 
 functions:
-  responseToSlackMessage:
-    name: response-to-slack-message-${self:provider.stage}
-    handler: src/index.handler
+  catchSlackMessage:
+    name: catch-slack-response-${self:provider.stage}
+    handler: src/index.catchSlackMessage
     events:
       - http:
           path: animal_api
           method: POST
+  responseToSlackMessage:
+    name: response-to-slack-message-${self:provider.stage}
+    handler: src/index.handler
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - AnimalSlackBotResponseQueue
+              - Arn
