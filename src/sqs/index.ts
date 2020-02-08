@@ -5,16 +5,12 @@ import { randomAnimal } from '../actions/random-animal';
 import { drawAnimalOmikuji } from '../actions/animal-omikuji';
 
 export async function handler(event: lambda.SQSEvent): Promise<void> {
-  event.Records.forEach(record => {
+  event.Records.forEach(async record => {
     const body = JSON.parse(record.body);
-    dealWithEventBody(body);
+    const slackText: string = body.event.text || '';
+
+    await randomCat(slackText);
+    await randomAnimal(slackText);
+    await drawAnimalOmikuji(slackText);
   });
-}
-
-async function dealWithEventBody(body: any): Promise<void> {
-  const slackText: string = body.event.text || '';
-
-  await randomCat(slackText);
-  await randomAnimal(slackText);
-  await drawAnimalOmikuji(slackText);
 }
