@@ -12,7 +12,7 @@ export async function handleSlackMessage(
     return apiGatewayProxyResult(400, 'No event body found!');
   }
 
-  const eventBody = JSON.parse(event.body || '');
+  const eventBody = JSON.parse(event.body);
 
   if (isVerifyingEventApi(eventBody)) {
     return apiGatewayProxyResult(200, eventBody.challenge);
