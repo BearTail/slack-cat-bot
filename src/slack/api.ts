@@ -23,6 +23,20 @@ export async function postImage(imageUrl: string, text?: string): Promise<Respon
   }
 }
 
+export function apiGatewayProxyResult(
+  statusCode: number,
+  message: string,
+): lambda.APIGatewayProxyResult {
+  return {
+    statusCode,
+    headers: {
+      'Content-type': 'text/plain',
+      'X-Slack-No-Retry': 1,
+    },
+    body: message,
+  };
+}
+
 function optionsWithAttachment(imageUrl: string, text: string = ''): rp.OptionsWithUrl {
   const body = {
     text,
@@ -38,19 +52,5 @@ function optionsWithAttachment(imageUrl: string, text: string = ''): rp.OptionsW
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-  };
-}
-
-export function apiGatewayProxyResult(
-  statusCode: number,
-  message: string,
-): lambda.APIGatewayProxyResult {
-  return {
-    statusCode,
-    headers: {
-      'Content-type': 'text/plain',
-      'X-Slack-No-Retry': 1,
-    },
-    body: message,
   };
 }
