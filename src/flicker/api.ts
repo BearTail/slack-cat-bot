@@ -1,7 +1,7 @@
 import * as rp from 'request-promise';
 
-import { AnimalEnglish, CatEnglish } from './Types';
-import { getRandomInt } from './Util';
+import { AnimalEnglish, CatEnglish } from '../Types';
+import { getRandomInt } from '../utils/utils';
 
 /*
  * 動物の画像を検索します
