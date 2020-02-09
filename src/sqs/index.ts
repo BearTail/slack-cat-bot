@@ -6,7 +6,7 @@ import { drawAnimalOmikuji } from '../actions/animal-omikuji';
 import { gembaCat } from '../actions/gemba-cat';
 
 export async function handler(event: lambda.SQSEvent): Promise<void> {
-  event.Records.forEach(async record => {
+  await Promise.all(event.Records.map(async record => {
     const body = JSON.parse(record.body);
     const slackText: string = body.event.text || '';
 
@@ -14,5 +14,5 @@ export async function handler(event: lambda.SQSEvent): Promise<void> {
     await randomAnimal(slackText);
     await drawAnimalOmikuji(slackText);
     await gembaCat(slackText);
-  });
+  }));
 }
