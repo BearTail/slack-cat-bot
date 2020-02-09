@@ -1,7 +1,7 @@
-import { randomSelect } from './Util';
+import { randomSelect } from './utils/utils';
 import { ANIMALS_KANA, animalSearchableText } from './Animal';
 import { OmikujiResult, AnimalKana, Fortune, CatBreed } from './Types';
-import { fetchAnimalImageUrl } from './FlickerApi';
+import { fetchAnimalImageUrl } from './flicker/api';
 
 export async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
   const animal = selectAnimal();

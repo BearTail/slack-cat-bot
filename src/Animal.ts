@@ -1,4 +1,4 @@
-import { hiraganaToKatakana } from './Util';
+import { hiraganaToKatakana } from './utils/utils';
 import { AnimalEnglish, AnimalMapsType, AnimalKana } from './Types';
 
 const ANIMAL_MAPPS: AnimalMapsType = {
