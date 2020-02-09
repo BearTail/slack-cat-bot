@@ -26,7 +26,7 @@ export async function randomCat(text: string): Promise<void> {
   }
 
   try {
-    await postImage(imageUrl, cat);
+    await postImage(imageUrl, `${cat}だよ`);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }
