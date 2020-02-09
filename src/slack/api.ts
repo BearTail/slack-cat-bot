@@ -42,7 +42,6 @@ function optionsWithAttachment(text: string = '', imageUrl: string, imageTitle: 
     text,
     attachments: [{
       image_url: imageUrl,
-      footer: imageTitle,
     }],
   };
   // todo ちゃんとハンドリングする
