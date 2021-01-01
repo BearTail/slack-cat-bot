@@ -8,7 +8,7 @@ export type CatMapsType = {
   'ロシアンブルー': 'Russian Blue cat';
   'ブリティッシュショートヘア': 'British Shorthair cat';
   'ラグドール': 'Ragdoll cat';
-  'くろねこ': 'black kitten';
+  'クロネコ': 'black kitten';
   'ベンガルにゃんこ': 'Bengal cat';
   'メインクーン': 'Maine Coon';
   'サイベリアン': 'Siberian cat';
