@@ -29,5 +29,4 @@ export type AnimalMapsType = {
   'モフモフ': 'fluffy cats',
 };
 
-export type AnimalEnglish = ValueOf<AnimalMapsType>;
 export type AnimalKana = keyof AnimalMapsType;

@@ -16,5 +16,4 @@ export type CatMapsType = {
   'サイベリアン': 'Siberian cat';
 };
 
-export type CatEnglish = ValueOf<CatMapsType>;
 export type CatKana = keyof CatMapsType;

@@ -1,6 +1,4 @@
 import * as rp from 'request-promise';
-import { AnimalEnglish } from '../types/Animal';
-import { CatEnglish } from '../types/Cat';
 import { randomInt } from '../utils/utils';
 
 /*
@@ -8,7 +6,7 @@ import { randomInt } from '../utils/utils';
  * 検索結果が見つからなかった場合には null を、見つかった場合には画像URLを返します
  * @see https://www.flickr.com/services/api/flickr.photos.search.html
  */
-export async function fetchAnimalImageUrl(animal: AnimalEnglish | CatEnglish): Promise<string|null> {
+export async function fetchAnimalImageUrl(animal: string): Promise<string|null> {
   try {
     const requestUrl = photosSearchUrl(animal);
     const res = await rp(requestUrl);
@@ -27,7 +25,7 @@ export async function fetchAnimalImageUrl(animal: AnimalEnglish | CatEnglish): P
   }
 }
 
-function photosSearchUrl(animal: AnimalEnglish | CatEnglish): string {
+function photosSearchUrl(animal: string): string {
   const method = 'flickr.photos.search';
   const perPage = 100;
   const maxPage = 100;
