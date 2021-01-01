@@ -28,7 +28,7 @@ export async function sendMessage(
 
   try {
     const result = await SQS.send(sendMessageCommand);
-    console.log(`Sqs result: ${result}`);
+    console.log(`Sqs result: ${JSON.stringify(result)}`);
 
     return result;
   } catch (e) {
