@@ -18,6 +18,8 @@ export type AnimalMapsType = {
   'チーター': 'cheetah',
   'キツネ': 'fox',
   'キリン': 'giraffe',
+  'モッフモフ': 'fluffy cats',
+  'モフモフ': 'fluffy cats',
 };
 
 export type AnimalEnglish = ValueOf<AnimalMapsType>;

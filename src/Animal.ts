@@ -19,6 +19,8 @@ const ANIMAL_MAPPS: AnimalMapsType = {
   'チーター': 'cheetah',
   'キツネ': 'fox',
   'キリン': 'giraffe',
+  'モッフモフ': 'fluffy cats',
+  'モフモフ': 'fluffy cats',
 };
 
 // 型の指定方法
