@@ -1,7 +1,8 @@
 import { randomSelect } from './utils/utils';
-import { ANIMALS_KANA, animalSearchableText } from './Animal';
+import { animalSearchableText } from './Animal';
 import { OmikujiResult, AnimalKana, Fortune, CatBreed } from './Types';
 import { fetchAnimalImageUrl } from './flicker/client';
+import { KanaAnimals } from './constants/AnimalMaps';
 
 export async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
   const animal = selectAnimal();
@@ -20,7 +21,7 @@ export async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
 }
 
 function selectAnimal(): AnimalKana {
-  return randomSelect(ANIMALS_KANA);
+  return randomSelect(KanaAnimals);
 }
 
 function selectFortune(): Fortune {
