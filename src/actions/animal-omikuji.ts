@@ -1,5 +1,5 @@
 import { getAnimalOmikujiResult } from '../AnimalOmikuji';
-import { postImage } from '../slack/api';
+import { postImage } from '../slack/client';
 
 /*
  * 動物おみくじを引いて、slackに結果を投稿します

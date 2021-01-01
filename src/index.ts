@@ -1,7 +1,7 @@
 import * as lambda from 'aws-lambda';
 
 import { sendMessage } from './sqs/client';
-import { apiGatewayProxyResult, isVerifyingEventApi } from './slack/api';
+import { apiGatewayProxyResult, isVerifyingEventApi } from './slack/client';
 
 export async function handleSlackMessage(
   event: lambda.APIGatewayProxyEvent,

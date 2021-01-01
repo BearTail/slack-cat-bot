@@ -6,7 +6,7 @@ import {
 } from '../Cat';
 
 import { fetchAnimalImageUrl } from '../flicker/api';
-import { postImage } from '../slack/api';
+import { postImage } from '../slack/client';
 
 /*
  * ランダムにニャンコを抽出します
