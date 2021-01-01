@@ -1,5 +1,3 @@
-type ValueOf<T> = T[keyof T];
-
 export type CatMapsType = {
   'マヌルニャンコ': 'manul cat';
   'アメリカンショートヘア': 'American shorthair cat';

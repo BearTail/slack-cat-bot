@@ -1,5 +1,3 @@
-type ValueOf<T> = T[keyof T];
-
 export type AnimalMapsType = {
   'ライオン': 'lion',
   'ユキヒョウ': 'snow leopard',

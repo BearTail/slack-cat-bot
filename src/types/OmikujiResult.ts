@@ -1,4 +1,4 @@
-import { AnimalKana } from '../Types';
+import { AnimalKana } from './Animal';
 
 export interface OmikujiResult {
   message: string;
