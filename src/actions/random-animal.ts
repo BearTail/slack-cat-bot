@@ -1,8 +1,8 @@
-import { AnimalEnglish } from '../Types';
-import { animalSearchableText, animalRequested } from '../Animal';
-
 import { fetchAnimalImageUrl } from '../flicker/client';
 import { postImage } from '../slack/client';
+import { AnimalMaps } from '../constants/Animals';
+import { hiraganaToKatakana } from '../utils/utils';
+import { animalSearchableText } from '../utils/searchableText';
 
 /*
  * 動物の写真をランダムで選択し、slackに画像を投稿します
@@ -12,7 +12,7 @@ export async function randomAnimal(text: string): Promise<void> {
     return;
   }
 
-  const animal = animalSearchableText(text) as AnimalEnglish | null;
+  const animal = animalSearchableText(text);
   if (!animal) {
     return;
   }
@@ -29,4 +29,8 @@ export async function randomAnimal(text: string): Promise<void> {
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }
+}
+
+function animalRequested(text: string): boolean {
+  return Object.keys(AnimalMaps).includes(hiraganaToKatakana(text));
 }

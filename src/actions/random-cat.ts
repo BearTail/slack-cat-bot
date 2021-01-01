@@ -1,8 +1,8 @@
 import { hiraganaToKatakana, randomSelect } from '../utils/utils';
 import { fetchAnimalImageUrl } from '../flicker/client';
 import { postImage } from '../slack/client';
-import { CatMaps, CatsKana } from '../constants/Cats';
-import { CatEnglish } from '../Types';
+import { CatsKana } from '../constants/Cats';
+import { catSearchableText } from '../utils/searchableText';
 
 /*
  * ランダムにニャンコを抽出します
@@ -37,8 +37,4 @@ function randomCatRequested(text: string): boolean {
     'ニャンコホシイ',
     'ニャンコタリナイ',
   ].includes(hiraganaToKatakana(text));
-}
-
-function catSearchableText(text: string): CatEnglish {
-  return CatMaps[hiraganaToKatakana(text)];
 }
