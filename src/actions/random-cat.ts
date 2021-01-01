@@ -36,6 +36,7 @@ function randomCatRequested(text: string): boolean {
   return [
     'ナンデモイイカラニャンコクレ',
     'ニャンコクレ',
+    'ニャンコクダサイ',
     'ランダムニャンコ',
     'ニャンコホシイ',
     'ニャンコタリナイ',
