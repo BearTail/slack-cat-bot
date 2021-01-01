@@ -26,8 +26,8 @@ export const ANIMAL_MAPS: AnimalMapsType = {
   'チーター': 'cheetah',
   'キツネ': 'fox',
   'キリン': 'giraffe',
-  'モッフモフ': 'fluffy cats',
-  'モフモフ': 'fluffy cats',
+  'モッフモフ': 'fluffy cat',
+  'モフモフ': 'fluffy cat',
 };
 
 export const KANA_ANIMALS = Object.keys(ANIMAL_MAPS) as AnimalKana[];
