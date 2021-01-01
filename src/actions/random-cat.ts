@@ -12,7 +12,8 @@ export async function randomCat(text: string): Promise<void> {
   if (!catText) return;
 
   const searchableText = catSearchableText(catText);
-  const imageUrls = await fetchImageUrls(searchableText);
+  const count = multipleRequest(text) ? 3 : 1;
+  const imageUrls = await fetchImageUrls(searchableText, count);
 
   if (imageUrls.length === 0) {
     console.log('no images found!');
@@ -26,6 +27,14 @@ export async function randomCat(text: string): Promise<void> {
   }
 }
 
+function multipleRequest(text: string): boolean {
+  ['詰合せ', '詰め合わせ', 'つめあわせ'].forEach((multiple) => {
+    if (text.includes(multiple)) return true;
+  })
+
+  return false;
+}
+
 function extractCat(text: string): string | null {
   const katakanaText = hiraganaToKatakana(text);
 
@@ -36,6 +45,9 @@ function extractCat(text: string): string | null {
   ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ'].forEach((suffix) => {
     Object.keys(CAT_MAPS).forEach((kanaAnimal) => {
       if (katakanaText === `${kanaAnimal}${suffix}`) return kanaAnimal;
+      if (katakanaText === `${kanaAnimal}詰メ合ワセ${suffix}`) return kanaAnimal;
+      if (katakanaText === `${kanaAnimal}詰合セ${suffix}`) return kanaAnimal;
+      if (katakanaText === `${kanaAnimal}ツメアワセ${suffix}`) return kanaAnimal;
     })
 
     if (katakanaText === `にゃんこ${suffix}`) return randomSelect(KANA_CATS);
