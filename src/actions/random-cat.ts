@@ -1,12 +1,8 @@
-import { hiraganaToKatakana } from '../utils/utils';
-
-import {
-  selectRandomCat,
-  catSearchableText,
-} from '../Cat';
-
+import { hiraganaToKatakana, randomSelect } from '../utils/utils';
+import { catSearchableText } from '../Cat';
 import { fetchAnimalImageUrl } from '../flicker/client';
 import { postImage } from '../slack/client';
+import { CatsKana } from '../constants/Cats';
 
 /*
  * ランダムにニャンコを抽出します
@@ -16,7 +12,7 @@ export async function randomCat(text: string): Promise<void> {
     return;
   }
 
-  const cat = selectRandomCat();
+  const cat = randomSelect(CatsKana);
   const searchableText = catSearchableText(cat)
   const imageUrl = await fetchAnimalImageUrl(searchableText);
 
