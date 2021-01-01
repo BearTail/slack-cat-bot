@@ -12,8 +12,6 @@ export async function randomAnimal(text: string): Promise<void> {
   if (!animalText) return;
 
   const animal = animalSearchableText(animalText);
-  if (!animal) return;
-
   const imageUrl = await fetchImageUrl(animal);
 
   if (imageUrl === null) {
