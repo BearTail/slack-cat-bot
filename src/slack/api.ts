@@ -1,6 +1,15 @@
 import * as rp from 'request-promise';
 import * as lambda from 'aws-lambda';
-import { ResponseBody } from './types';
+import { ResponseBody, VerificationBody } from './types';
+
+/*
+ * slack の Event API を利用するために初回のみ必要となる認証かどうかを判定する
+ * @see https://api.slack.com/events/url_verification
+ */
+export function isVerifyingEventApi(eventBody: any): eventBody is VerificationBody {
+  return eventBody.type === 'url_verification' &&
+    typeof eventBody.challenge === 'string';
+}
 
 export async function postImage(imageUrl: string, text?: string, imageTitle?: string): Promise<ResponseBody> {
   try {
