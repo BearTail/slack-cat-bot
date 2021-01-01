@@ -1,62 +1,30 @@
 import * as lambda from 'aws-lambda';
 
-import { animalSearchableText, animalRequested } from './Animal';
-import { randomCatRequested } from './Cat';
-import { AnimalEnglish } from './Types';
+import { sendMessage } from './sqs/client';
+import { isVerifyingEventApi } from './slack/types';
+import { apiGatewayProxyResult } from './slack/api';
 
-import { drawAnimalOmikuji, randomAnimal, randomCat } from './Actions';
-
-export async function handler(event: lambda.APIGatewayProxyEvent): Promise<lambda.APIGatewayProxyResult> {
+export async function handleSlackMessage(
+  event: lambda.APIGatewayProxyEvent,
+  context: lambda.Context,
+): Promise<lambda.APIGatewayProxyResult> {
   if (!event.body) {
-    return responseBody(200, 'No event body found!');
+    return apiGatewayProxyResult(400, 'No event body found!');
   }
 
   const eventBody = JSON.parse(event.body);
 
-  /*
-   * slack の Event API を利用するために初回のみ必要となる認証
-   * @see https://api.slack.com/events/url_verification
-   */
-  if (eventBody.type === 'url_verification') {
-    return responseBody(200, eventBody.challenge);
+  // Event Api の初回のみの認証
+  if (isVerifyingEventApi(eventBody)) {
+    return apiGatewayProxyResult(200, eventBody.challenge);
   }
 
-  const slackText: string | null = eventBody.event.text;
+  // 3秒以内にレスポンスを返さないとタイムアウトと見なされ再度リクエストが来るためSQSを使う
+  const result = await sendMessage(event.body, context, `AnimalSlackBotResponseQueue`);
 
-  if (!slackText) {
-    return responseBody(200, 'Did nothing.');
+  if (result) {
+    return apiGatewayProxyResult(200, 'Process finished!');
+  } else {
+    return apiGatewayProxyResult(500, 'Process falied!');
   }
-
-  if (randomCatRequested(slackText)) {
-    await randomCat();
-
-    return responseBody(200, 'Random cat posted!');
-  }
-
-  if (animalRequested(slackText)) {
-    const animal = animalSearchableText(slackText) as AnimalEnglish | null;
-    if (animal) {
-      await randomAnimal(animal);
-
-      return responseBody(200, 'Random animal posted!');
-    }
-  }
-
-  if (slackText === 'おみくじ') {
-    await drawAnimalOmikuji();
-
-    return responseBody(200, 'Omikuji posted');
-  }
-
-  return responseBody(200, 'Did nothing.');
-}
-
-function responseBody(statusCode: number, message: string): lambda.APIGatewayProxyResult {
-  return {
-    statusCode,
-    headers: {
-      'Content-type': 'text/plain',
-    },
-    body: message,
-  };
 }
