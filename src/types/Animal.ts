@@ -9,7 +9,6 @@ export type AnimalMapsType = {
   'マヌルニャンコ': 'manul cat',
   'カワウソ': 'otter',
   'シロネコ': 'white cat animal',
-  'クロネコ': 'black cat animal',
   'ニャンコ': 'cat animal',
   'ネテルニャンコ': 'sleeping cat',
   '寝テルニャンコ': 'sleeping cat',

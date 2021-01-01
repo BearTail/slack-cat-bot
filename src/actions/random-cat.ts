@@ -1,19 +1,17 @@
 import { hiraganaToKatakana, randomSelect } from '../utils/utils';
 import { fetchImageUrl } from '../clients/flicker';
 import { postImages } from '../clients/slack';
-import { KANA_CATS } from '../constants/Cats';
+import { CAT_MAPS, KANA_CATS } from '../constants/Cats';
 import { catSearchableText } from '../utils/searchableText';
 
 /*
  * ランダムにニャンコを抽出します
  */
 export async function randomCat(text: string): Promise<void> {
-  if (!randomCatRequested(text)) {
-    return;
-  }
+  const catText = extractCat(text);
+  if (!catText) return;
 
-  const cat = randomSelect(KANA_CATS);
-  const searchableText = catSearchableText(cat)
+  const searchableText = catSearchableText(catText);
   const imageUrl = await fetchImageUrl(searchableText);
 
   if (imageUrl === null) {
@@ -22,22 +20,26 @@ export async function randomCat(text: string): Promise<void> {
   }
 
   try {
-    await postImages([imageUrl], `${cat}だよ`);
+    await postImages([imageUrl], `${catText}だよ`);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }
 }
 
-function randomCatRequested(text: string): boolean {
-  return [
-    'ナンデモイイカラニャンコクレ',
-    'ニャンコクレ',
-    'ニャンコクダサイ',
-    'ニャンコ下サイ',
-    'ランダムニャンコ',
-    'ニャンコホシイ',
-    'ニャンコ欲シイ',
-    'ニャンコタリナイ',
-    'ニャンコ足リナイ',
-  ].includes(hiraganaToKatakana(text));
+function extractCat(text: string): string | null {
+  const katakanaText = hiraganaToKatakana(text);
+
+  if (katakanaText === 'ナンデモイイカラニャンコクレ') {
+    return randomSelect(KANA_CATS);
+  }
+
+  ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ'].forEach((suffix) => {
+    Object.keys(CAT_MAPS).forEach((kanaAnimal) => {
+      if (katakanaText === `${kanaAnimal}${suffix}`) return kanaAnimal;
+    })
+
+    if (katakanaText === `にゃんこ${suffix}`) return randomSelect(KANA_CATS);
+  });
+
+  return null;
 }
