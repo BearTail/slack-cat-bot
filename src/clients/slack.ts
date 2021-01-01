@@ -13,7 +13,7 @@ export function isVerifyingEventApi(eventBody: any): eventBody is VerificationBo
 
 export async function postImages(imageUrls: string[], text?: string, imageTitle?: string): Promise<ResponseBody> {
   try {
-    const options = optionsWithAttachment(text, imageUrls, imageTitle);
+    const options = optionsWithAttachments(text, imageUrls, imageTitle);
     const res = await rp(options);
 
     console.log(`Slack api result: ${res}`);
@@ -46,7 +46,7 @@ export function apiGatewayProxyResult(
   };
 }
 
-function optionsWithAttachment(text: string = '', imageUrls: string[], imageTitle: string = ''): rp.OptionsWithUrl {
+function optionsWithAttachments(text: string = '', imageUrls: string[], imageTitle: string = ''): rp.OptionsWithUrl {
   const body = {
     text,
     attachments: imageUrls.map((url) => { return { image_url: url }; }),
