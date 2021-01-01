@@ -1,7 +1,7 @@
 import { KANA_ANIMALS } from '../constants/Animals';
 import { CAT_BREEDS } from '../constants/Cats';
 import { FORTUNRS } from '../constants/Fortunes';
-import { fetchAnimalImageUrl } from '../clients/flicker';
+import { fetchImageUrl } from '../clients/flicker';
 import { postImage } from '../clients/slack';
 import { OmikujiResult } from '../types/OmikujiResult';
 import { animalSearchableText } from '../utils/searchableText';
@@ -29,7 +29,7 @@ export async function drawAnimalOmikuji(text: string): Promise<void> {
 async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
   const animal = randomSelect(KANA_ANIMALS);
   const animalSearchText = animalSearchableText(animal);
-  const animalImageUrl = await fetchAnimalImageUrl(animalSearchText);
+  const animalImageUrl = await fetchImageUrl(animalSearchText);
 
   if (!animalImageUrl) {
     return null;
