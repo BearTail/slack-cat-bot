@@ -1,3 +1,3 @@
-import { Fortunes } from '../constants/Fortunes';
+import { FORTUNRS } from '../constants/Fortunes';
 
-export type Fortune = typeof Fortunes[number];
+export type Fortune = typeof FORTUNRS[number];

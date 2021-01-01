@@ -1,4 +1,4 @@
-export const Fortunes = <const>[
+export const FORTUNRS = <const>[
   '大吉',
   '大吉',
   '吉',

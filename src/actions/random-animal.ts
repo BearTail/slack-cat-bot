@@ -1,6 +1,6 @@
 import { fetchAnimalImageUrl } from '../clients/flicker';
 import { postImage } from '../clients/slack';
-import { AnimalMaps } from '../constants/Animals';
+import { KANA_ANIMALS } from '../constants/Animals';
 import { hiraganaToKatakana } from '../utils/utils';
 import { animalSearchableText } from '../utils/searchableText';
 
@@ -32,5 +32,5 @@ export async function randomAnimal(text: string): Promise<void> {
 }
 
 function animalRequested(text: string): boolean {
-  return Object.keys(AnimalMaps).includes(hiraganaToKatakana(text));
+  return KANA_ANIMALS.includes(hiraganaToKatakana(text));
 }

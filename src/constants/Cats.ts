@@ -1,6 +1,6 @@
 import { CatMapsType, CatKana } from '../types/Cat';
 
-export const CatBreeds = <const>[
+export const CAT_BREEDS = <const>[
   'アメリカンショートヘア',
   'マンチカン',
   '三毛猫',
@@ -15,7 +15,7 @@ export const CatBreeds = <const>[
   'サイベリアン',
 ];
 
-export const CatMaps: CatMapsType = {
+export const CAT_MAPS: CatMapsType = {
   'マヌルニャンコ': 'manul cat',
   'アメリカンショートヘア': 'American shorthair cat',
   'マンチカン': 'Munchkin cat',
@@ -31,4 +31,4 @@ export const CatMaps: CatMapsType = {
   'サイベリアン': 'Siberian cat',
 };
 
-export const CatsKana = Object.keys(CatMaps) as CatKana[];
+export const KANA_CATS = Object.keys(CAT_MAPS) as CatKana[];

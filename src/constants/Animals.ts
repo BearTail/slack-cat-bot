@@ -1,6 +1,6 @@
 import { AnimalKana, AnimalMapsType } from '../types/Animal';
 
-export const AnimalMaps: AnimalMapsType = {
+export const ANIMAL_MAPS: AnimalMapsType = {
   'ライオン': 'lion',
   'ユキヒョウ': 'snow leopard',
   'トラ': 'tiger',
@@ -29,4 +29,4 @@ export const AnimalMaps: AnimalMapsType = {
   'モフモフ': 'fluffy cats',
 };
 
-export const KanaAnimals = Object.keys(AnimalMaps) as AnimalKana[];
+export const KANA_ANIMALS = Object.keys(ANIMAL_MAPS) as AnimalKana[];

@@ -1,6 +1,6 @@
-import { KanaAnimals } from '../constants/Animals';
-import { CatBreeds } from '../constants/Cats';
-import { Fortunes } from '../constants/Fortunes';
+import { KANA_ANIMALS } from '../constants/Animals';
+import { CAT_BREEDS } from '../constants/Cats';
+import { FORTUNRS } from '../constants/Fortunes';
 import { fetchAnimalImageUrl } from '../clients/flicker';
 import { postImage } from '../clients/slack';
 import { OmikujiResult } from '../types/OmikujiResult';
@@ -27,7 +27,7 @@ export async function drawAnimalOmikuji(text: string): Promise<void> {
 }
 
 async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
-  const animal = randomSelect(KanaAnimals);
+  const animal = randomSelect(KANA_ANIMALS);
   const animalSearchText = animalSearchableText(animal);
   const animalImageUrl = await fetchAnimalImageUrl(animalSearchText);
 
@@ -36,7 +36,7 @@ async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
   }
 
   return {
-    message: `今日の動物は${animal}で、あなたの運勢は${randomSelect(Fortunes)}です\n今日のラッキーにゃんこは${randomSelect(CatBreeds)}だよ`,
+    message: `今日の動物は${animal}で、あなたの運勢は${randomSelect(FORTUNRS)}です\n今日のラッキーにゃんこは${randomSelect(CAT_BREEDS)}だよ`,
     animal,
     url: animalImageUrl,
   };
