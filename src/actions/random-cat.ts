@@ -33,8 +33,11 @@ function randomCatRequested(text: string): boolean {
     'ナンデモイイカラニャンコクレ',
     'ニャンコクレ',
     'ニャンコクダサイ',
+    'ニャンコ下サイ',
     'ランダムニャンコ',
     'ニャンコホシイ',
+    'ニャンコ欲シイ',
     'ニャンコタリナイ',
+    'ニャンコ足リナイ',
   ].includes(hiraganaToKatakana(text));
 }

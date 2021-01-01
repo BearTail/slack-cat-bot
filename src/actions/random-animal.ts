@@ -32,5 +32,13 @@ export async function randomAnimal(text: string): Promise<void> {
 }
 
 function animalRequested(text: string): boolean {
-  return Object.keys(ANIMAL_MAPS).includes(hiraganaToKatakana(text));
+  const katakanaText = hiraganaToKatakana(text);
+
+  ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ'].forEach((suffix) => {
+    Object.keys(ANIMAL_MAPS).forEach((kanaAnimal) => {
+      if (katakanaText === `${kanaAnimal}${suffix}`) return true;
+    })
+  });
+
+  return false;
 }
