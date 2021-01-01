@@ -3,6 +3,7 @@ import { animalSearchableText } from './Animal';
 import { OmikujiResult, AnimalKana, Fortune, CatBreed } from './Types';
 import { fetchAnimalImageUrl } from './flicker/client';
 import { KanaAnimals } from './constants/Animals';
+import { CatBreeds } from './constants/Cats';
 
 export async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
   const animal = selectAnimal();
@@ -45,20 +46,5 @@ function selectFortune(): Fortune {
 }
 
 function selectCat(): CatBreed {
-  const cats: CatBreed[] = [
-    'アメリカンショートヘア',
-    'マンチカン',
-    '三毛猫',
-    'スコティッシュホールド',
-    'ノルウェージャンフォレスト',
-    'ロシアンブルー',
-    'ブリティッシュショートヘア',
-    'ラグドール',
-    'くろねこ',
-    'ベンガルにゃんこ',
-    'メインクーン',
-    'サイベリアン',
-  ];
-
-  return randomSelect(cats);
+  return randomSelect(CatBreeds);
 }
