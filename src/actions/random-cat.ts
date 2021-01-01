@@ -41,14 +41,14 @@ function multipleRequest(text: string): boolean {
 }
 
 function extractCat(text: string): string | null {
-  const katakanaText = hiraganaToKatakana(text);
+  const katakanaText = hiraganaToKatakana(text).replace(/\s/g, '');
 
   if (katakanaText === 'ナンデモイイカラニャンコクレ') {
     return randomSelect(KANA_CATS);
   }
 
-  for (let suffix in ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ']) {
-    for (let kanaCat in Object.keys(CAT_MAPS)) {
+  for (const suffix of ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ']) {
+    for (const kanaCat of Object.keys(CAT_MAPS)) {
       if (katakanaText === `${kanaCat}${suffix}`) return kanaCat;
       if (katakanaText === `${kanaCat}詰メ合ワセ${suffix}`) return kanaCat;
       if (katakanaText === `${kanaCat}詰合セ${suffix}`) return kanaCat;

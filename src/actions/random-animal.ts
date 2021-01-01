@@ -37,10 +37,10 @@ function multipleRequest(text: string): boolean {
 }
 
 function extractAnimal(text: string): string | null {
-  const katakanaText = hiraganaToKatakana(text);
+  const katakanaText = hiraganaToKatakana(text).replace(/\s/g, '');
 
-  for (let suffix in ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ']) {
-    for (let kanaAnimal in Object.keys(ANIMAL_MAPS)) {
+  for (const suffix of ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ']) {
+    for (const kanaAnimal of Object.keys(ANIMAL_MAPS)) {
       if (katakanaText === `${kanaAnimal}${suffix}`) return kanaAnimal;
       if (katakanaText === `${kanaAnimal}詰メ合ワセ${suffix}`) return kanaAnimal;
       if (katakanaText === `${kanaAnimal}詰合セ${suffix}`) return kanaAnimal;
