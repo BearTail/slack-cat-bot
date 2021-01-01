@@ -8,14 +8,11 @@ import { animalSearchableText } from '../utils/searchableText';
  * 動物の写真をランダムで選択し、slackに画像を投稿します
  */
 export async function randomAnimal(text: string): Promise<void> {
-  if (!animalRequested(text)) {
-    return;
-  }
+  const animalText = extractAnimal(text)
+  if (!animalText) return;
 
-  const animal = animalSearchableText(text);
-  if (!animal) {
-    return;
-  }
+  const animal = animalSearchableText(animalText);
+  if (!animal) return;
 
   const imageUrl = await fetchImageUrl(animal);
 
@@ -31,14 +28,14 @@ export async function randomAnimal(text: string): Promise<void> {
   }
 }
 
-function animalRequested(text: string): boolean {
+function extractAnimal(text: string): string | null {
   const katakanaText = hiraganaToKatakana(text);
 
   ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ'].forEach((suffix) => {
     Object.keys(ANIMAL_MAPS).forEach((kanaAnimal) => {
-      if (katakanaText === `${kanaAnimal}${suffix}`) return true;
+      if (katakanaText === `${kanaAnimal}${suffix}`) return kanaAnimal;
     })
   });
 
-  return false;
+  return null;
 }
