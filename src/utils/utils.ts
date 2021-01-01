@@ -8,7 +8,7 @@ export function randomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-export function randomSelect<T>(array: T[]): T {
+export function randomSelect<T>(array: ReadonlyArray<T>): T {
   const index = randomInt(array.length);
   return array[index];
 }

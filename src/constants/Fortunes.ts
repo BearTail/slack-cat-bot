@@ -1,6 +1,4 @@
-import { Fortune } from '../Types';
-
-export const Fortunes: Fortune[] = [
+export const Fortunes = <const>[
   '大吉',
   '大吉',
   '吉',
