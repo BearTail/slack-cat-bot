@@ -9,18 +9,23 @@ import { catSearchableText } from '../utils/searchableText';
  */
 export async function randomCat(text: string): Promise<void> {
   const catText = extractCat(text);
-  if (!catText) return;
-
-  const searchableText = catSearchableText(catText);
-  const count = multipleRequest(text) ? 3 : 1;
-  const imageUrls = await fetchImageUrls(searchableText, count);
-
-  if (imageUrls.length === 0) {
-    console.log('no images found!');
+  if (!catText) {
+    console.log('にゃんこ見つからず');
     return;
   }
 
+  const searchableText = catSearchableText(catText);
+  console.log('searchableText: ' + searchableText);
+  const count = multipleRequest(text) ? 3 : 1;
+
   try {
+    const imageUrls = await fetchImageUrls(searchableText, count);
+
+    if (imageUrls.length === 0) {
+      console.log('no images found!');
+      return;
+    }
+
     await postImages(imageUrls, `${catText}だよ`);
   } catch (e) {
     console.log(`error occurred: ${e}`);
@@ -28,9 +33,9 @@ export async function randomCat(text: string): Promise<void> {
 }
 
 function multipleRequest(text: string): boolean {
-  ['詰合せ', '詰め合わせ', 'つめあわせ'].forEach((multiple) => {
+  for (let multiple in ['詰合せ', '詰め合わせ', 'つめあわせ']) {
     if (text.includes(multiple)) return true;
-  })
+  }
 
   return false;
 }
@@ -42,16 +47,19 @@ function extractCat(text: string): string | null {
     return randomSelect(KANA_CATS);
   }
 
-  ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ'].forEach((suffix) => {
-    Object.keys(CAT_MAPS).forEach((kanaAnimal) => {
-      if (katakanaText === `${kanaAnimal}${suffix}`) return kanaAnimal;
-      if (katakanaText === `${kanaAnimal}詰メ合ワセ${suffix}`) return kanaAnimal;
-      if (katakanaText === `${kanaAnimal}詰合セ${suffix}`) return kanaAnimal;
-      if (katakanaText === `${kanaAnimal}ツメアワセ${suffix}`) return kanaAnimal;
-    })
+  for (let suffix in ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ']) {
+    for (let kanaCat in Object.keys(CAT_MAPS)) {
+      if (katakanaText === `${kanaCat}${suffix}`) return kanaCat;
+      if (katakanaText === `${kanaCat}詰メ合ワセ${suffix}`) return kanaCat;
+      if (katakanaText === `${kanaCat}詰合セ${suffix}`) return kanaCat;
+      if (katakanaText === `${kanaCat}ツメアワセ${suffix}`) return kanaCat;
+    }
 
-    if (katakanaText === `にゃんこ${suffix}`) return randomSelect(KANA_CATS);
-  });
+    if (katakanaText === `ニャンコ${suffix}`) return randomSelect(KANA_CATS);
+    if (katakanaText === `ニャンコ詰メ合ワセ${suffix}`) return randomSelect(KANA_CATS);
+    if (katakanaText === `ニャンコ詰合セ${suffix}`) return randomSelect(KANA_CATS);
+    if (katakanaText === `ニャンコツメアワセ${suffix}`) return randomSelect(KANA_CATS);
+  }
 
   return null;
 }

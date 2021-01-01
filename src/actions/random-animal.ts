@@ -13,14 +13,15 @@ export async function randomAnimal(text: string): Promise<void> {
 
   const animal = animalSearchableText(animalText);
   const count = multipleRequest(text) ? 3 : 1;
-  const imageUrls = await fetchImageUrls(animal, count);
-
-  if (imageUrls.length === 0) {
-    console.log('no images found!');
-    return;
-  }
 
   try {
+    const imageUrls = await fetchImageUrls(animal, count);
+
+    if (imageUrls.length === 0) {
+      console.log('no images found!');
+      return;
+    }
+
     await postImages(imageUrls);
   } catch (e) {
     console.log(`error occurred: ${e}`);
@@ -28,9 +29,9 @@ export async function randomAnimal(text: string): Promise<void> {
 }
 
 function multipleRequest(text: string): boolean {
-  ['詰合せ', '詰め合わせ', 'つめあわせ'].forEach((multiple) => {
+  for (let multiple in ['詰合せ', '詰め合わせ', 'つめあわせ']) {
     if (text.includes(multiple)) return true;
-  })
+  }
 
   return false;
 }
@@ -38,14 +39,14 @@ function multipleRequest(text: string): boolean {
 function extractAnimal(text: string): string | null {
   const katakanaText = hiraganaToKatakana(text);
 
-  ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ'].forEach((suffix) => {
-    Object.keys(ANIMAL_MAPS).forEach((kanaAnimal) => {
+  for (let suffix in ['', 'クレ', 'ホシイ', '欲シイ', 'クダサイ', '下サイ', 'タリナイ', '足リナイ']) {
+    for (let kanaAnimal in Object.keys(ANIMAL_MAPS)) {
       if (katakanaText === `${kanaAnimal}${suffix}`) return kanaAnimal;
       if (katakanaText === `${kanaAnimal}詰メ合ワセ${suffix}`) return kanaAnimal;
       if (katakanaText === `${kanaAnimal}詰合セ${suffix}`) return kanaAnimal;
       if (katakanaText === `${kanaAnimal}ツメアワセ${suffix}`) return kanaAnimal;
-    })
-  });
+    }
+  }
 
   return null;
 }
