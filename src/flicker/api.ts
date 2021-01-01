@@ -19,7 +19,6 @@ export async function fetchAnimalImageUrl(animal: AnimalEnglish | CatEnglish): P
     const photo = photos[randomIndex];
 
     const url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`
-    console.log(url);
 
     return url;
   } catch (e) {
