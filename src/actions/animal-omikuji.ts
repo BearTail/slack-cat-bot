@@ -3,7 +3,7 @@ import { CatBreeds } from '../constants/Cats';
 import { Fortunes } from '../constants/Fortunes';
 import { fetchAnimalImageUrl } from '../flicker/client';
 import { postImage } from '../slack/client';
-import { OmikujiResult } from '../Types';
+import { OmikujiResult } from '../types/OmikujiResult';
 import { animalSearchableText } from '../utils/searchableText';
 import { randomSelect } from '../utils/utils';
 

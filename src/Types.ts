@@ -34,12 +34,6 @@ export type AnimalKana = keyof AnimalMapsType;
 
 export type CatBreed = 'アメリカンショートヘア' | 'マンチカン' | '三毛猫' | 'スコティッシュホールド' | 'ノルウェージャンフォレスト' | 'ロシアンブルー' | 'ブリティッシュショートヘア' | 'ラグドール' | 'くろねこ' | 'ベンガルにゃんこ' | 'メインクーン' | 'サイベリアン';
 
-export interface OmikujiResult {
-  message: string;
-  animal: AnimalKana;
-  url: string;
-}
-
 export type CatMapsType = {
   'マヌルニャンコ': 'manul cat';
   'アメリカンショートヘア': 'American shorthair cat';
