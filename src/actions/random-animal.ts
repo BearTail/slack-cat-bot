@@ -1,5 +1,5 @@
 import { fetchImageUrl } from '../clients/flicker';
-import { postImage } from '../clients/slack';
+import { postImages } from '../clients/slack';
 import { ANIMAL_MAPS } from '../constants/Animals';
 import { hiraganaToKatakana } from '../utils/utils';
 import { animalSearchableText } from '../utils/searchableText';
@@ -25,7 +25,7 @@ export async function randomAnimal(text: string): Promise<void> {
   }
 
   try {
-    await postImage(imageUrl);
+    await postImages([imageUrl]);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }

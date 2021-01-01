@@ -2,7 +2,7 @@ import { KANA_ANIMALS } from '../constants/Animals';
 import { CAT_BREEDS } from '../constants/Cats';
 import { FORTUNRS } from '../constants/Fortunes';
 import { fetchImageUrl } from '../clients/flicker';
-import { postImage } from '../clients/slack';
+import { postImages } from '../clients/slack';
 import { OmikujiResult } from '../types/OmikujiResult';
 import { animalSearchableText } from '../utils/searchableText';
 import { randomSelect } from '../utils/utils';
@@ -19,7 +19,7 @@ export async function drawAnimalOmikuji(text: string): Promise<void> {
     const result = await getAnimalOmikujiResult();
 
     if (result) {
-      await postImage(result.url, result.message);
+      await postImages([result.url], result.message);
     }
   } catch (e) {
     console.log(`error occurred: ${e}`);

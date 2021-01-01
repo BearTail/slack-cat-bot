@@ -11,9 +11,9 @@ export function isVerifyingEventApi(eventBody: any): eventBody is VerificationBo
     typeof eventBody.challenge === 'string';
 }
 
-export async function postImage(imageUrl: string, text?: string, imageTitle?: string): Promise<ResponseBody> {
+export async function postImages(imageUrls: string[], text?: string, imageTitle?: string): Promise<ResponseBody> {
   try {
-    const options = optionsWithAttachment(text, imageUrl, imageTitle);
+    const options = optionsWithAttachment(text, imageUrls, imageTitle);
     const res = await rp(options);
 
     console.log(`Slack api result: ${res}`);
@@ -46,12 +46,10 @@ export function apiGatewayProxyResult(
   };
 }
 
-function optionsWithAttachment(text: string = '', imageUrl: string, imageTitle: string = ''): rp.OptionsWithUrl {
+function optionsWithAttachment(text: string = '', imageUrls: string[], imageTitle: string = ''): rp.OptionsWithUrl {
   const body = {
     text,
-    attachments: [{
-      image_url: imageUrl,
-    }],
+    attachments: imageUrls.map((url) => { return { image_url: url }; }),
   };
   // todo ちゃんとハンドリングする
   const url = (imageTitle === '@genbaneko_bot' ? process.env.GEMBA_CAT_SKACK_INCOMING_WEBHOOK_URL : process.env.SKACK_INCOMING_WEBHOOK_URL) ?? '';

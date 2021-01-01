@@ -1,6 +1,6 @@
 import { hiraganaToKatakana, randomSelect } from '../utils/utils';
 import { fetchImageUrl } from '../clients/flicker';
-import { postImage } from '../clients/slack';
+import { postImages } from '../clients/slack';
 import { KANA_CATS } from '../constants/Cats';
 import { catSearchableText } from '../utils/searchableText';
 
@@ -22,7 +22,7 @@ export async function randomCat(text: string): Promise<void> {
   }
 
   try {
-    await postImage(imageUrl, `${cat}だよ`);
+    await postImages([imageUrl], `${cat}だよ`);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }
