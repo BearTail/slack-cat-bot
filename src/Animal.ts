@@ -1,6 +1,6 @@
 import { hiraganaToKatakana } from './utils/utils';
 import { AnimalEnglish } from './Types';
-import { AnimalMaps } from './constants/AnimalMaps';
+import { AnimalMaps } from './constants/Animals';
 
 export function animalRequested(text: string): boolean {
   return Object.keys(AnimalMaps).includes(hiraganaToKatakana(text));
