@@ -1,6 +1,6 @@
-import { CatBreed, CatKana, CatMapsType } from '../Types';
+import { CatKana, CatMapsType } from '../Types';
 
-export const CatBreeds: CatBreed[] = [
+export const CatBreeds = <const>[
   'アメリカンショートヘア',
   'マンチカン',
   '三毛猫',
