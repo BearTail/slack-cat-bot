@@ -27,7 +27,7 @@ export const CAT_MAPS: CatMapsType = {
   'ブリティッシュショートヘア': 'British Shorthair cat',
   'ラグドール': 'Ragdoll cat',
   'クロネコ': 'black kitten',
-  'ベンガルにゃんこ': 'Bengal cat',
+  'ベンガルニャンコ': 'Bengal cat',
   'メインクーン': 'Maine Coon',
   'サイベリアン': 'Siberian cat',
   'ラガマフィン': 'Ragamuffin cat',
