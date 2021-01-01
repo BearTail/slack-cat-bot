@@ -1,12 +1,8 @@
-import { hiraganaToKatakana } from '../utils/utils';
-
-import {
-  selectRandomCat,
-  catSearchableText,
-} from '../Cat';
-
-import { fetchAnimalImageUrl } from '../flicker/api';
-import { postImage } from '../slack/api';
+import { hiraganaToKatakana, randomSelect } from '../utils/utils';
+import { fetchImageUrl } from '../clients/flicker';
+import { postImage } from '../clients/slack';
+import { KANA_CATS } from '../constants/Cats';
+import { catSearchableText } from '../utils/searchableText';
 
 /*
  * ランダムにニャンコを抽出します
@@ -16,9 +12,9 @@ export async function randomCat(text: string): Promise<void> {
     return;
   }
 
-  const cat = selectRandomCat();
+  const cat = randomSelect(KANA_CATS);
   const searchableText = catSearchableText(cat)
-  const imageUrl = await fetchAnimalImageUrl(searchableText);
+  const imageUrl = await fetchImageUrl(searchableText);
 
   if (imageUrl === null) {
     console.log('no images found!');
@@ -36,6 +32,7 @@ function randomCatRequested(text: string): boolean {
   return [
     'ナンデモイイカラニャンコクレ',
     'ニャンコクレ',
+    'ニャンコクダサイ',
     'ランダムニャンコ',
     'ニャンコホシイ',
     'ニャンコタリナイ',

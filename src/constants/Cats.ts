@@ -1,7 +1,21 @@
-import { hiraganaToKatakana, randomSelect } from './utils/utils';
-import { CatEnglish, CatMapsType, CatKana } from './Types';
+import { CatMapsType, CatKana } from '../types/Cat';
 
-const CAT_MAPPS: CatMapsType = {
+export const CAT_BREEDS = <const>[
+  'アメリカンショートヘア',
+  'マンチカン',
+  '三毛猫',
+  'スコティッシュホールド',
+  'ノルウェージャンフォレスト',
+  'ロシアンブルー',
+  'ブリティッシュショートヘア',
+  'ラグドール',
+  'くろねこ',
+  'ベンガルにゃんこ',
+  'メインクーン',
+  'サイベリアン',
+];
+
+export const CAT_MAPS: CatMapsType = {
   'マヌルニャンコ': 'manul cat',
   'アメリカンショートヘア': 'American shorthair cat',
   'マンチカン': 'Munchkin cat',
@@ -17,13 +31,4 @@ const CAT_MAPPS: CatMapsType = {
   'サイベリアン': 'Siberian cat',
 };
 
-export function selectRandomCat(): CatKana {
-  return randomSelect(CAT_KANA);
-}
-
-// 型の指定方法
-export const CAT_KANA = Object.keys(CAT_MAPPS) as CatKana[];
-
-export function catSearchableText(text: string): CatEnglish {
-  return CAT_MAPPS[hiraganaToKatakana(text)];
-}
+export const KANA_CATS = Object.keys(CAT_MAPS) as CatKana[];

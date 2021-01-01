@@ -54,7 +54,7 @@ functions:
           method: POST
   responseToSlackMessage:
     name: response-to-slack-message-${self:provider.stage}
-    handler: src/sqs/index.handler
+    handler: src/sqs/client.handler
     events:
       - sqs:
           arn:

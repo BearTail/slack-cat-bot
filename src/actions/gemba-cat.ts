@@ -1,6 +1,6 @@
 import { randomSelect } from '../utils/utils';
-import { postImage } from '../slack/api';
-import { GEMBA_CAT_URLS } from '../collections/gemba-cat';
+import { postImage } from '../clients/slack';
+import { GEMBA_CAT_URLS } from '../constants/GembaCats';
 
 export async function gembaCat(text: string): Promise<void> {
   if (text !== '現場にゃんこ' && text !== '現場猫') {
