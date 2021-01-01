@@ -1,4 +1,4 @@
-import { AnimalMapsType, AnimalKana } from '../Types';
+import { AnimalKana, AnimalMapsType } from '../types/Animal';
 
 export const AnimalMaps: AnimalMapsType = {
   'ライオン': 'lion',

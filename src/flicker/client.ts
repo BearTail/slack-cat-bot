@@ -1,6 +1,6 @@
 import * as rp from 'request-promise';
-
-import { AnimalEnglish, CatEnglish } from '../Types';
+import { AnimalEnglish } from '../types/Animal';
+import { CatEnglish } from '../types/Cat';
 import { randomInt } from '../utils/utils';
 
 /*
