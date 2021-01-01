@@ -13,7 +13,7 @@ export async function sendMessage(
   body: string,
   context: lambda.Context,
   queueName: string,
-): Promise<SendMessageOutput | undefined> { // どうすべき？
+): Promise<SendMessageOutput | undefined> {
   const accountId = context.invokedFunctionArn.split(':')[4];
   const queueUrl = `https://sqs.${REGION}.amazonaws.com/${accountId}/${queueName}`;
   const params: SendMessageInput = {
