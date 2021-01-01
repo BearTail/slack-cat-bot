@@ -1,5 +1,5 @@
 import { randomSelect } from '../utils/utils';
-import { postImage } from '../slack/client';
+import { postImage } from '../clients/slack';
 import { GEMBA_CAT_URLS } from '../constants/GembaCats';
 
 export async function gembaCat(text: string): Promise<void> {

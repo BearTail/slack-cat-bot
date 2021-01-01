@@ -1,6 +1,6 @@
 import { hiraganaToKatakana, randomSelect } from '../utils/utils';
-import { fetchAnimalImageUrl } from '../flicker/client';
-import { postImage } from '../slack/client';
+import { fetchAnimalImageUrl } from '../clients/flicker';
+import { postImage } from '../clients/slack';
 import { CatsKana } from '../constants/Cats';
 import { catSearchableText } from '../utils/searchableText';
 

@@ -1,5 +1,5 @@
-import { fetchAnimalImageUrl } from '../flicker/client';
-import { postImage } from '../slack/client';
+import { fetchAnimalImageUrl } from '../clients/flicker';
+import { postImage } from '../clients/slack';
 import { AnimalMaps } from '../constants/Animals';
 import { hiraganaToKatakana } from '../utils/utils';
 import { animalSearchableText } from '../utils/searchableText';

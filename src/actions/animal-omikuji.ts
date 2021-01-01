@@ -1,8 +1,8 @@
 import { KanaAnimals } from '../constants/Animals';
 import { CatBreeds } from '../constants/Cats';
 import { Fortunes } from '../constants/Fortunes';
-import { fetchAnimalImageUrl } from '../flicker/client';
-import { postImage } from '../slack/client';
+import { fetchAnimalImageUrl } from '../clients/flicker';
+import { postImage } from '../clients/slack';
 import { OmikujiResult } from '../types/OmikujiResult';
 import { animalSearchableText } from '../utils/searchableText';
 import { randomSelect } from '../utils/utils';
