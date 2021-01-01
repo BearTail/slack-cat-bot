@@ -8,17 +8,22 @@ import { randomInt } from '../utils/utils';
  */
 export async function fetchImageUrl(searchText: string): Promise<string|null> {
   try {
-    const requestUrl = photosSearchUrl(searchText);
-    const res = await rp(requestUrl);
-    const response = JSON.parse(res);
+    /** offsetの指定次第で見つからない場合は再試行する */
+    for (let i = 0; i < 3; i++) {
+      const requestUrl = photosSearchUrl(searchText);
+      const res = await rp(requestUrl);
+      const response = JSON.parse(res);
+      const photos = response.photos.photo;
 
-    const photos = response.photos.photo;
-    const randomIndex = randomInt(photos.length);
-    const photo = photos[randomIndex];
+      if (photos.length === 0) continue;
 
-    const url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`
+      const randomIndex = randomInt(photos.length);
+      const photo = photos[randomIndex];
 
-    return url;
+      return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`
+    }
+
+    return null;
   } catch (e) {
     console.log(`Error occurred in flicker api: ${e}`);
     return null;
