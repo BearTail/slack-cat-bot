@@ -12,6 +12,7 @@ export type CatMapsType = {
   'ベンガルにゃんこ': 'Bengal cat';
   'メインクーン': 'Maine Coon';
   'サイベリアン': 'Siberian cat';
+  'ラガマフィン': 'Ragamuffin cat';
 };
 
 export type CatKana = keyof CatMapsType;

@@ -13,6 +13,7 @@ export const CAT_BREEDS = <const>[
   'ベンガルにゃんこ',
   'メインクーン',
   'サイベリアン',
+  'ラガマフィン',
 ];
 
 export const CAT_MAPS: CatMapsType = {
@@ -29,6 +30,7 @@ export const CAT_MAPS: CatMapsType = {
   'ベンガルにゃんこ': 'Bengal cat',
   'メインクーン': 'Maine Coon',
   'サイベリアン': 'Siberian cat',
+  'ラガマフィン': 'Ragamuffin cat',
 };
 
 export const KANA_CATS = Object.keys(CAT_MAPS) as CatKana[];
