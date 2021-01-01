@@ -4,11 +4,11 @@ export function hiraganaToKatakana(text: string): string {
   });
 }
 
-export function getRandomInt(max: number): number {
+export function randomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 export function randomSelect<T>(array: T[]): T {
-  const index = getRandomInt(array.length);
+  const index = randomInt(array.length);
   return array[index];
 }

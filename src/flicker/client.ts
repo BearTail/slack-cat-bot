@@ -1,7 +1,7 @@
 import * as rp from 'request-promise';
 
 import { AnimalEnglish, CatEnglish } from '../Types';
-import { getRandomInt } from '../utils/utils';
+import { randomInt } from '../utils/utils';
 
 /*
  * 動物の画像を検索します
@@ -15,7 +15,7 @@ export async function fetchAnimalImageUrl(animal: AnimalEnglish | CatEnglish): P
     const response = JSON.parse(res);
 
     const photos = response.photos.photo;
-    const randomIndex = getRandomInt(photos.length);
+    const randomIndex = randomInt(photos.length);
     const photo = photos[randomIndex];
 
     const url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`
@@ -31,7 +31,7 @@ function photosSearchUrl(animal: AnimalEnglish | CatEnglish): string {
   const method = 'flickr.photos.search';
   const perPage = 100;
   const maxPage = 100;
-  const page = getRandomInt(maxPage);
+  const page = randomInt(maxPage);
 
   return `https://api.flickr.com/services/rest?api_key=${process.env.FLICKER_API_KEY}&method=${method}&text=${animal}&per_page=${perPage}&page=${page}&sort=relevance&format=json&nojsoncallback=1&lang=en-US`;
 }
