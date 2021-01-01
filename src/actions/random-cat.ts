@@ -9,13 +9,9 @@ import { catSearchableText } from '../utils/searchableText';
  */
 export async function randomCat(text: string): Promise<void> {
   const catText = extractCat(text);
-  if (!catText) {
-    console.log('にゃんこ見つからず');
-    return;
-  }
+  if (!catText) return;
 
   const searchableText = catSearchableText(catText);
-  console.log('searchableText: ' + searchableText);
   const count = multipleRequest(text) ? 3 : 1;
 
   try {
@@ -33,7 +29,7 @@ export async function randomCat(text: string): Promise<void> {
 }
 
 function multipleRequest(text: string): boolean {
-  for (let multiple in ['詰合せ', '詰め合わせ', 'つめあわせ']) {
+  for (const multiple of ['詰合せ', '詰め合わせ', 'つめあわせ']) {
     if (text.includes(multiple)) return true;
   }
 

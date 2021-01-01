@@ -29,7 +29,7 @@ export async function randomAnimal(text: string): Promise<void> {
 }
 
 function multipleRequest(text: string): boolean {
-  for (let multiple in ['詰合せ', '詰め合わせ', 'つめあわせ']) {
+  for (const multiple of ['詰合せ', '詰め合わせ', 'つめあわせ']) {
     if (text.includes(multiple)) return true;
   }
 
