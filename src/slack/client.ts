@@ -1,6 +1,6 @@
 import * as rp from 'request-promise';
 import * as lambda from 'aws-lambda';
-import { ResponseBody, VerificationBody } from './types';
+import { ResponseBody, VerificationBody } from '../types/Slack';
 
 /*
  * slack の Event API を利用するために初回のみ必要となる認証かどうかを判定する
