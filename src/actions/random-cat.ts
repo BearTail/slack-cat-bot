@@ -1,5 +1,5 @@
 import { hiraganaToKatakana, randomSelect } from '../utils/utils';
-import { fetchImageUrl } from '../clients/flicker';
+import { fetchImageUrls } from '../clients/flicker';
 import { postImages } from '../clients/slack';
 import { CAT_MAPS, KANA_CATS } from '../constants/Cats';
 import { catSearchableText } from '../utils/searchableText';
@@ -12,15 +12,15 @@ export async function randomCat(text: string): Promise<void> {
   if (!catText) return;
 
   const searchableText = catSearchableText(catText);
-  const imageUrl = await fetchImageUrl(searchableText);
+  const imageUrls = await fetchImageUrls(searchableText);
 
-  if (imageUrl === null) {
+  if (imageUrls.length === 0) {
     console.log('no images found!');
     return;
   }
 
   try {
-    await postImages([imageUrl], `${catText}だよ`);
+    await postImages(imageUrls, `${catText}だよ`);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }

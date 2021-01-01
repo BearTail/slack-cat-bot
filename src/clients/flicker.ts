@@ -3,10 +3,10 @@ import { randomInt } from '../utils/utils';
 
 /*
  * 動物の画像を検索します
- * 検索結果が見つからなかった場合には null を、見つかった場合には画像URLを返します
+ * 検索結果が見つからなかった場合には空配列を、見つかった場合には画像URLの配列を返します
  * @see https://www.flickr.com/services/api/flickr.photos.search.html
  */
-export async function fetchImageUrl(searchText: string): Promise<string|null> {
+export async function fetchImageUrls(searchText: string, count = 1): Promise<string[]> {
   try {
     /** offsetの指定次第で見つからない場合は再試行する */
     for (let i = 0; i < 3; i++) {
@@ -17,17 +17,23 @@ export async function fetchImageUrl(searchText: string): Promise<string|null> {
 
       if (photos.length === 0) continue;
 
-      const randomIndex = randomInt(photos.length);
-      const photo = photos[randomIndex];
+      const startIndex = randomInt(photos.length - count);
 
-      return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`
+      return [...Array(count)].map((_, i) => {
+        const photo = photos[startIndex + i];
+        return buildImageUrl(photo);
+      })
     }
 
-    return null;
+    return [];
   } catch (e) {
     console.log(`Error occurred in flicker api: ${e}`);
-    return null;
+    return [];
   }
+}
+
+function buildImageUrl(photo): string {
+  return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
 }
 
 function photosSearchUrl(searchText: string): string {

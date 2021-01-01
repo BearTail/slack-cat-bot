@@ -1,4 +1,4 @@
-import { fetchImageUrl } from '../clients/flicker';
+import { fetchImageUrls } from '../clients/flicker';
 import { postImages } from '../clients/slack';
 import { ANIMAL_MAPS } from '../constants/Animals';
 import { hiraganaToKatakana } from '../utils/utils';
@@ -12,15 +12,15 @@ export async function randomAnimal(text: string): Promise<void> {
   if (!animalText) return;
 
   const animal = animalSearchableText(animalText);
-  const imageUrl = await fetchImageUrl(animal);
+  const imageUrls = await fetchImageUrls(animal);
 
-  if (imageUrl === null) {
+  if (imageUrls.length === 0) {
     console.log('no images found!');
     return;
   }
 
   try {
-    await postImages([imageUrl]);
+    await postImages(imageUrls);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }
