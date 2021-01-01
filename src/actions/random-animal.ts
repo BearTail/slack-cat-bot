@@ -1,7 +1,7 @@
 import { AnimalEnglish } from '../Types';
 import { animalSearchableText, animalRequested } from '../Animal';
 
-import { fetchAnimalImageUrl } from '../flicker/api';
+import { fetchAnimalImageUrl } from '../flicker/client';
 import { postImage } from '../slack/client';
 
 /*

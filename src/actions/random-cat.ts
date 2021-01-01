@@ -5,7 +5,7 @@ import {
   catSearchableText,
 } from '../Cat';
 
-import { fetchAnimalImageUrl } from '../flicker/api';
+import { fetchAnimalImageUrl } from '../flicker/client';
 import { postImage } from '../slack/client';
 
 /*
