@@ -10,7 +10,7 @@ export async function fetchImageUrls(searchText: string, count = 1): Promise<str
   try {
     /** offsetの指定次第で見つからない場合は再試行する */
     for (let i = 0; i < 3; i++) {
-      const requestUrl = photosSearchUrl(searchText);
+      const requestUrl = buildPhotosSearchUrl(searchText);
       const res = await rp(requestUrl);
       const response = JSON.parse(res);
       const photos = response.photos.photo;
@@ -36,7 +36,7 @@ function buildImageUrl(photo): string {
   return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
 }
 
-function photosSearchUrl(searchText: string): string {
+function buildPhotosSearchUrl(searchText: string): string {
   const method = 'flickr.photos.search';
   const perPage = 100;
   const maxPage = 100;
