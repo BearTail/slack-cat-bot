@@ -34,6 +34,13 @@ export const CAT_MAPS = {
   'ラガマフィン': 'Ragamuffin cat',
   'ペルシャニャンコ': 'Persian cat',
   'ペルシャ': 'Persian cat',
+  'モッフモフ': 'fluffy cat',
+  'モフモフ': 'fluffy cat',
+  '子猫': 'cute kitten',
+  '子ネコ': 'cute kitten',
+  'コネコ': 'cute kitten',
+  'ネテルニャンコ': 'sleeping cat',
+  '寝テルニャンコ': 'sleeping cat',
 };
 
 export const KATAKANA_CATS = Object.keys(CAT_MAPS) as KatakanaCat[];
