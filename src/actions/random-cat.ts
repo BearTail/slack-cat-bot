@@ -44,11 +44,11 @@ function extractCat(text: string): string | null {
   }
 
   for (const suffix of ['', 'クレ', 'ホシイ', '欲シイ', 'ヲクダサイ', 'クダサイ', 'ヲ下サイ', '下サイ', 'タリナイ', '足リナイ']) {
-    for (const kanaCat of Object.keys(CAT_MAPS)) {
-      if (katakanaText === `${kanaCat}${suffix}`) return kanaCat;
-      if (katakanaText === `${kanaCat}詰メ合ワセ${suffix}`) return kanaCat;
-      if (katakanaText === `${kanaCat}詰合セ${suffix}`) return kanaCat;
-      if (katakanaText === `${kanaCat}ツメアワセ${suffix}`) return kanaCat;
+    for (const KatakanaCat of Object.keys(CAT_MAPS)) {
+      if (katakanaText === `${KatakanaCat}${suffix}`) return KatakanaCat;
+      if (katakanaText === `${KatakanaCat}詰メ合ワセ${suffix}`) return KatakanaCat;
+      if (katakanaText === `${KatakanaCat}詰合セ${suffix}`) return KatakanaCat;
+      if (katakanaText === `${KatakanaCat}ツメアワセ${suffix}`) return KatakanaCat;
     }
 
     if (katakanaText === `ニャンコ${suffix}`) return randomSelect(KANA_CATS);

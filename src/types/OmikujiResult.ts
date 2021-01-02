@@ -1,7 +1,7 @@
-import { AnimalKana } from './Animal';
+import { KatakanaAnimal } from './Animal';
 
 export interface OmikujiResult {
   message: string;
-  animal: AnimalKana;
+  animal: KatakanaAnimal;
   url: string;
 }
