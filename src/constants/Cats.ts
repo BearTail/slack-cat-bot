@@ -1,4 +1,4 @@
-import { CatMapsType, CatKana } from '../types/Cat';
+import { KanaCat } from '../types/Cat';
 
 export const CAT_BREEDS = <const>[
   'アメリカンショートヘア',
@@ -36,4 +36,4 @@ export const CAT_MAPS = {
   'ペルシャ': 'Persian cat',
 };
 
-export const KANA_CATS = Object.keys(CAT_MAPS) as CatKana[];
+export const KANA_CATS = Object.keys(CAT_MAPS) as KanaCat[];
