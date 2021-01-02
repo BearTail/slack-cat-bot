@@ -36,4 +36,4 @@ export const CAT_MAPS = {
   'ペルシャ': 'Persian cat',
 };
 
-export const KANA_CATS = Object.keys(CAT_MAPS) as KatakanaCat[];
+export const KATAKANA_CATS = Object.keys(CAT_MAPS) as KatakanaCat[];

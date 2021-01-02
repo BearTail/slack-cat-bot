@@ -29,4 +29,4 @@ export const ANIMAL_MAPS = {
   'モフモフ': 'fluffy cat',
 };
 
-export const KANA_ANIMALS = Object.keys(ANIMAL_MAPS) as KatakanaAnimal[];
+export const KATAKANA_ANIMALS = Object.keys(ANIMAL_MAPS) as KatakanaAnimal[];

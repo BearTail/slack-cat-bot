@@ -1,7 +1,7 @@
 import { hiraganaToKatakana, randomSelect } from '../utils/utils';
 import { fetchImageUrls } from '../clients/flicker';
 import { postImages } from '../clients/slack';
-import { CAT_MAPS, KANA_CATS } from '../constants/Cats';
+import { CAT_MAPS, KATAKANA_CATS } from '../constants/Cats';
 import { catSearchableText } from '../utils/searchableText';
 
 /*
@@ -40,7 +40,7 @@ function extractCat(text: string): string | null {
   const katakanaText = hiraganaToKatakana(text).replace(/\s/g, '');
 
   if (katakanaText === 'ナンデモイイカラニャンコクレ') {
-    return randomSelect(KANA_CATS);
+    return randomSelect(KATAKANA_CATS);
   }
 
   for (const suffix of ['', 'クレ', 'ホシイ', '欲シイ', 'ヲクダサイ', 'クダサイ', 'ヲ下サイ', '下サイ', 'タリナイ', '足リナイ']) {
@@ -51,10 +51,10 @@ function extractCat(text: string): string | null {
       if (katakanaText === `${KatakanaCat}ツメアワセ${suffix}`) return KatakanaCat;
     }
 
-    if (katakanaText === `ニャンコ${suffix}`) return randomSelect(KANA_CATS);
-    if (katakanaText === `ニャンコ詰メ合ワセ${suffix}`) return randomSelect(KANA_CATS);
-    if (katakanaText === `ニャンコ詰合セ${suffix}`) return randomSelect(KANA_CATS);
-    if (katakanaText === `ニャンコツメアワセ${suffix}`) return randomSelect(KANA_CATS);
+    if (katakanaText === `ニャンコ${suffix}`) return randomSelect(KATAKANA_CATS);
+    if (katakanaText === `ニャンコ詰メ合ワセ${suffix}`) return randomSelect(KATAKANA_CATS);
+    if (katakanaText === `ニャンコ詰合セ${suffix}`) return randomSelect(KATAKANA_CATS);
+    if (katakanaText === `ニャンコツメアワセ${suffix}`) return randomSelect(KATAKANA_CATS);
   }
 
   return null;

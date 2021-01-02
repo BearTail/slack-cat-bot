@@ -1,4 +1,4 @@
-import { KANA_ANIMALS } from '../constants/Animals';
+import { KATAKANA_ANIMALS } from '../constants/Animals';
 import { CAT_BREEDS } from '../constants/Cats';
 import { FORTUNRS } from '../constants/Fortunes';
 import { fetchImageUrls } from '../clients/flicker';
@@ -27,7 +27,7 @@ export async function drawAnimalOmikuji(text: string): Promise<void> {
 }
 
 async function getAnimalOmikujiResult(): Promise<OmikujiResult | null> {
-  const animal = randomSelect(KANA_ANIMALS);
+  const animal = randomSelect(KATAKANA_ANIMALS);
   const animalSearchText = animalSearchableText(animal);
   const animalImageUrls = await fetchImageUrls(animalSearchText);
 
