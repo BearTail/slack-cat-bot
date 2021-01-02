@@ -1,6 +1,6 @@
-import { AnimalKana, AnimalMapsType } from '../types/Animal';
+import { AnimalKana } from '../types/Animal';
 
-export const ANIMAL_MAPS: AnimalMapsType = {
+export const ANIMAL_MAPS = {
   'ライオン': 'lion',
   'ユキヒョウ': 'snow leopard',
   'トラ': 'tiger',
@@ -11,7 +11,6 @@ export const ANIMAL_MAPS: AnimalMapsType = {
   'マヌルニャンコ': 'manul cat',
   'カワウソ': 'otter',
   'シロネコ': 'white cat animal',
-  'ニャンコ': 'cat animal',
   'ネテルニャンコ': 'sleeping cat',
   '寝テルニャンコ': 'sleeping cat',
   'ネテルチーター': 'sleeping cheetah',
