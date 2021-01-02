@@ -27,7 +27,7 @@ export const CAT_MAPS = {
   'ロシアンブルー': 'Russian Blue cat',
   'ブリティッシュショートヘア': 'British Shorthair cat',
   'ラグドール': 'Ragdoll cat',
-  'クロネコ': 'black kitten',
+  'クロネコ': 'black cat animal',
   'ベンガルニャンコ': 'Bengal cat',
   'メインクーン': 'Maine Coon',
   'サイベリアン': 'Siberian cat',
