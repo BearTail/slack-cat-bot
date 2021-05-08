@@ -29,7 +29,7 @@ export async function randomAnimal(text: string): Promise<void> {
 }
 
 function multipleRequest(text: string): boolean {
-  for (const multiple of ['詰合せ', '詰め合わせ', 'つめあわせ']) {
+  for (const multiple of ['いっぱい', '詰合せ', '詰め合わせ', 'つめあわせ']) {
     if (text.includes(multiple)) return true;
   }
 
@@ -39,13 +39,9 @@ function multipleRequest(text: string): boolean {
 function extractAnimal(text: string): string | null {
   const katakanaText = hiraganaToKatakana(text).replace(/\s/g, '');
 
-  for (const suffix of ['', 'クレ', 'ホシイ', '欲シイ', 'ヲクダサイ', 'クダサイ', 'ヲ下サイ', '下サイ', 'タリナイ', '足リナイ']) {
-    for (const kanaAnimal of Object.keys(ANIMAL_MAPS)) {
-      if (katakanaText === `${kanaAnimal}${suffix}`) return kanaAnimal;
-      if (katakanaText === `${kanaAnimal}詰メ合ワセ${suffix}`) return kanaAnimal;
-      if (katakanaText === `${kanaAnimal}詰合セ${suffix}`) return kanaAnimal;
-      if (katakanaText === `${kanaAnimal}ツメアワセ${suffix}`) return kanaAnimal;
-    }
+  for (const kanaAnimal of Object.keys(ANIMAL_MAPS)) {
+    const regex = new RegExp(kanaAnimal + "(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)$")
+    if (regex.test(katakanaText)) return kanaAnimal;
   }
 
   return null;
