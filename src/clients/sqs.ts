@@ -6,9 +6,9 @@ import { gembaCat } from '../actions/gemba-cat';
 import {
   SQSClient,
   SendMessageCommand,
-  SendMessageOutput,
-  SendMessageInput
-} from '@aws-sdk/client-sqs-node';
+  SendMessageCommandOutput,
+  SendMessageCommandInput
+} from '@aws-sdk/client-sqs';
 
 const REGION = process.env.REGION;
 const SQS = new SQSClient({ region: REGION });
@@ -17,10 +17,10 @@ export async function sendMessage(
   body: string,
   context: lambda.Context,
   queueName: string,
-): Promise<SendMessageOutput | undefined> {
+): Promise<SendMessageCommandOutput | undefined> {
   const accountId = context.invokedFunctionArn.split(':')[4];
   const queueUrl = `https://sqs.${REGION}.amazonaws.com/${accountId}/${queueName}`;
-  const params: SendMessageInput = {
+  const params: SendMessageCommandInput = {
     MessageBody: body,
     QueueUrl: queueUrl,
   };
