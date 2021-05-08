@@ -11,6 +11,11 @@ export async function randomCat(text: string): Promise<void> {
   const catText = extractCat(text);
   if (!catText) return;
 
+  if (Math.random() <= 0.08) {
+    await postImages([], `${catText}あげない🐈`);
+    return;
+  }
+
   const searchableText = catSearchableText(catText);
   const count = multipleRequest(text) ? 3 : 1;
 
