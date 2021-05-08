@@ -29,7 +29,7 @@ export async function randomCat(text: string): Promise<void> {
 }
 
 function multipleRequest(text: string): boolean {
-  for (const multiple of ['詰合せ', '詰め合わせ', 'つめあわせ']) {
+  for (const multiple of ['いっぱい', '詰合せ', '詰め合わせ', 'つめあわせ']) {
     if (text.includes(multiple)) return true;
   }
 
@@ -39,22 +39,12 @@ function multipleRequest(text: string): boolean {
 function extractCat(text: string): string | null {
   const katakanaText = hiraganaToKatakana(text).replace(/\s/g, '');
 
-  if (katakanaText === 'ナンデモイイカラニャンコクレ') {
-    return randomSelect(KATAKANA_CATS);
-  }
+  const randamRegex = new RegExp(/ニャンコ(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)$/)
+  if (randamRegex.test(katakanaText)) return randomSelect(KATAKANA_CATS);
 
-  for (const suffix of ['', 'クレ', 'ホシイ', '欲シイ', 'ヲクダサイ', 'クダサイ', 'ヲ下サイ', '下サイ', 'タリナイ', '足リナイ']) {
-    for (const KatakanaCat of Object.keys(CAT_MAPS)) {
-      if (katakanaText === `${KatakanaCat}${suffix}`) return KatakanaCat;
-      if (katakanaText === `${KatakanaCat}詰メ合ワセ${suffix}`) return KatakanaCat;
-      if (katakanaText === `${KatakanaCat}詰合セ${suffix}`) return KatakanaCat;
-      if (katakanaText === `${KatakanaCat}ツメアワセ${suffix}`) return KatakanaCat;
-    }
-
-    if (katakanaText === `ニャンコ${suffix}`) return randomSelect(KATAKANA_CATS);
-    if (katakanaText === `ニャンコ詰メ合ワセ${suffix}`) return randomSelect(KATAKANA_CATS);
-    if (katakanaText === `ニャンコ詰合セ${suffix}`) return randomSelect(KATAKANA_CATS);
-    if (katakanaText === `ニャンコツメアワセ${suffix}`) return randomSelect(KATAKANA_CATS);
+  for (const katakanaCat of Object.keys(CAT_MAPS)) {
+    const regex = new RegExp(katakanaCat + "(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)$")
+    if (regex.test(katakanaText)) return katakanaCat;
   }
 
   return null;
