@@ -22,7 +22,8 @@ export async function randomCat(text: string): Promise<void> {
       return;
     }
 
-    await postImages(imageUrls, `${catText}だよ`);
+    const suffix = randomSelect(['だよ', 'ほしいんでしょ？', '足りてる？', '仕上がってるよ'])
+    await postImages(imageUrls, `${catText}${suffix}`);
   } catch (e) {
     console.log(`error occurred: ${e}`);
   }
