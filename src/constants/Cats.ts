@@ -18,12 +18,16 @@ export const CAT_BREEDS = <const>[
 ];
 
 export const CAT_MAPS = {
+  'ネテルニャンコ': 'sleeping cat',
+  '寝テルニャンコ': 'sleeping cat',
   'マヌルニャンコ': 'manul cat',
   'アメリカンショートヘア': 'American shorthair cat',
   'マンチカン': 'Munchkin cat',
   'チャウシー': 'Chausie cat',
   'スコティッシュホールド': 'Scottish Fold cat',
+  'ノルウェージャンフォレストキャット': 'Norwegian Forest Cat',
   'ノルウェージャンフォレスト': 'Norwegian Forest Cat',
+  'ノルウェー': 'Norwegian Forest Cat',
   'ロシアンブルー': 'Russian Blue cat',
   'ブリティッシュショートヘア': 'British Shorthair cat',
   'ラグドール': 'Ragdoll cat',
@@ -39,8 +43,6 @@ export const CAT_MAPS = {
   '子猫': 'cute kitten',
   '子ネコ': 'cute kitten',
   'コネコ': 'cute kitten',
-  'ネテルニャンコ': 'sleeping cat',
-  '寝テルニャンコ': 'sleeping cat',
 };
 
 export const KATAKANA_CATS = Object.keys(CAT_MAPS) as KatakanaCat[];

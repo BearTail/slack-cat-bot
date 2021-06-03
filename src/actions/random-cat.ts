@@ -11,7 +11,7 @@ export async function randomCat(text: string): Promise<void> {
   const catText = extractCat(text);
   if (!catText) return;
 
-  if (Math.random() <= 0.08) {
+  if (Math.random() <= 0.05) {
     await postImages([], `${catText}あげない🐈`);
     return;
   }
@@ -45,13 +45,13 @@ function multipleRequest(text: string): boolean {
 function extractCat(text: string): string | null {
   const katakanaText = hiraganaToKatakana(text).replace(/\s/g, '');
 
-  const randamRegex = new RegExp(/ニャンコ(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)$/)
-  if (randamRegex.test(katakanaText)) return randomSelect(KATAKANA_CATS);
-
   for (const katakanaCat of Object.keys(CAT_MAPS)) {
-    const regex = new RegExp(katakanaCat + "(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)$")
+    const regex = new RegExp(katakanaCat + "(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)(|！|！！|！！！)$")
     if (regex.test(katakanaText)) return katakanaCat;
   }
+
+  const randamRegex = new RegExp(/ニャンコ(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)(|！|！！|！！！)$/)
+  if (randamRegex.test(katakanaText)) return randomSelect(KATAKANA_CATS);
 
   return null;
 }

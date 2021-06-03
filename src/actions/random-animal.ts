@@ -40,7 +40,7 @@ function extractAnimal(text: string): string | null {
   const katakanaText = hiraganaToKatakana(text).replace(/\s/g, '');
 
   for (const kanaAnimal of Object.keys(ANIMAL_MAPS)) {
-    const regex = new RegExp(kanaAnimal + "(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)$")
+    const regex = new RegExp(kanaAnimal + "(|イッパイ|詰メ合ワセ|詰合セ|ツメアワセ)(|クレ|ホシイ|欲シイ|ホシイデス|欲シイデス|ヲクダサイ|クダサイ|ヲ下サイ|下サイ|タリナイ|足リナイ)(|！|！！|！！！)$")
     if (regex.test(katakanaText)) return kanaAnimal;
   }
 
